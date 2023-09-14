@@ -1,5 +1,5 @@
 module.exports = {
-    generateMessage: require('./sendResponse.helper'),
+    generateMessage: require('./generateMessage.helper'),
     getModelName: require('./getModelName.helper'),
     sendResponse: require('./sendResponse.helper'),
 };

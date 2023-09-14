@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            this.hasOne(models.Profile, { foreignKey: 'userID' });
             this.hasOne(models.RefreshToken, { foreignKey: 'userID' });
         }
     }

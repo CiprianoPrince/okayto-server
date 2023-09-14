@@ -1,6 +1,8 @@
 // Load environment variables
 require('dotenv').config();
 
+const crypto = require('crypto').randomBytes(50).toString('hex')
+
 // External dependencies
 const path = require('path');
 const express = require('express');
