@@ -8,15 +8,24 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const expressWinston = require('express-winston');
 
 // Internal dependencies
+const { verifyJwt, credentials, errorLogger } = require('./middlewares');
 const corsOptions = require('./config/corsOptions');
+const db = require('./models');
 
 const app = express();
 
 // Logging
+app.use(
+    expressWinston.errorLogger({
+        winstonInstance: errorLogger,
+    })
+);
 
 // Security and req handling
+app.use(credentials);
 
 // Cross Origin Resource Sharing
 app.use(cors(corsOptions));
@@ -33,6 +42,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Database initialization
+db.sequelize
+    .sync()
+    .then(() => console.log('Database synced successfully.'))
+    .catch((err) => console.error('Error syncing database:', err));
 
 // Serve static images
 app.use(
@@ -45,10 +58,15 @@ app.use(
 );
 
 // Auth Routes
+require('./routes/auth.routes')(app);
+require('./routes/register.routes')(app);
+require('./routes/refresh.routes')(app);
+require('./routes/logout.routes')(app);
 
 // Public resource routes
 
 // JWT Verification for API routes
+app.use(verifyJwt);
 
 // Start server
 const PORT = process.env.PORT || 8000;
