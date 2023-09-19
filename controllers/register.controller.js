@@ -17,7 +17,7 @@ exports.handleNewUser = async (req, res) => {
             return sendResponse(
                 res,
                 StatusCodes.BAD_REQUEST,
-                generateMessage.all.emptyData(),
+                generateMessage.createOne.fail(),
                 null,
                 errors.array()
             );
@@ -38,7 +38,7 @@ exports.handleNewUser = async (req, res) => {
         sendResponse(
             res,
             StatusCodes.INTERNAL_SERVER_ERROR,
-            generateMessage.createOne.failure('User'),
+            generateMessage.createOne.error('User'),
             null,
             error,
             'ERR9001'
