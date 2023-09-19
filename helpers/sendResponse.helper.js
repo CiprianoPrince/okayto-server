@@ -3,7 +3,7 @@ const { getReasonPhrase } = require('http-status-codes');
 module.exports = (res, status, message, data = null, errors = null, errorCode = null) => {
     const responseObject = {
         status,
-        statusCode: getReasonPhrase(status),
+        statusText: getReasonPhrase(status),
         message,
     };
 
