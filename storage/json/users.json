@@ -1,0 +1,14 @@
+[
+    {
+        "userID": "eaf294f6-1c4a-4184-8f0a-dd4dcdcf5c17",
+        "firstName": "Prince",
+        "lastName": "Cipriano",
+        "email": "prince@gmail.com",
+        "password": "$2b$10$.7c/Dc0MZh7LaJT.Q3R.cOXKQNbfxJZbs4xeKrctpE5s4VCmfQgVO",
+        "address": null,
+        "phone": null,
+        "dateRegistered": "2023-07-06 23:09:42",
+        "createdAt": "2023-08-27 07:30:37",
+        "updatedAt": "2023-08-27 07:30:37"
+    }
+]

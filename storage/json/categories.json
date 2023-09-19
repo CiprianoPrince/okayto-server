@@ -1,0 +1,30 @@
+[
+    {
+        "categoryID": "7b81ef41-0a58-464a-9a89-a471d14f844b",
+        "name": "Cases and Stickers",
+        "description": "A piece of printed paper, plastic, vinyl, or other material with temporary or permanent pressure sensitive adhesive on one side",
+        "createdAt": "2023-08-27 09:29:41",
+        "updatedAt": "2023-08-27 09:29:41"
+    },
+    {
+        "categoryID": "89cd8ba0-d3e1-4959-ad64-74c03a786884",
+        "name": "Kids Apparel",
+        "description": "Crafted from 100% soft cotton, this vibrant tee features a playful cartoon explorer, perfect for your adventurous little one. Machine washable and designed for comfort, it&#x27;s a must-have for every young adventurer&#x27;s wardrobe",
+        "createdAt": "2023-08-27 08:37:57",
+        "updatedAt": "2023-08-27 08:37:57"
+    },
+    {
+        "categoryID": "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+        "name": "Adult Apparel",
+        "description": "Clothing designed and sized specifically for grown individuals. The range of adult apparel is vast and includes everything from casual wear to professional attire to special occasion garments",
+        "createdAt": "2023-08-27 07:51:56",
+        "updatedAt": "2023-08-27 07:51:56"
+    },
+    {
+        "categoryID": "f25874fe-b511-43e6-8ad1-aaebf4f81ea2",
+        "name": "Home Goods",
+        "description": "Goods and products used within households",
+        "createdAt": "2023-08-27 08:41:04",
+        "updatedAt": "2023-08-27 08:41:04"
+    }
+]

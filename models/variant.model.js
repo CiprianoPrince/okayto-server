@@ -1,7 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class Profile extends Model {
+    class Variant extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
@@ -9,35 +9,44 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            this.belongsTo(models.User, { foreignKey: 'userID' });
+            this.belongsTo(models.ProductColor, { foreignKey: 'productColorID' });
+            this.belongsTo(models.Size, { foreignKey: 'sizeID' });
+            this.hasOne(models.Inventory, { foreignKey: 'variantID' });
         }
     }
-    Profile.init(
+    Variant.init(
         {
-            profileID: {
+            variantID: {
                 primaryKey: true,
                 allowNull: false,
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
             },
-            userID: {
+            productColorID: {
                 allowNull: false,
                 type: DataTypes.UUID,
                 references: {
-                    model: 'users',
-                    key: 'userID',
+                    model: 'productcolors',
+                    key: 'productColorID',
                 },
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
             },
-            role: {
+            sizeID: {
                 allowNull: false,
-                type: DataTypes.ENUM,
-                values: ['Admin', 'User', 'Guest'],
+                type: DataTypes.UUID,
+                references: {
+                    model: 'sizes',
+                    key: 'sizeID',
+                },
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
             },
         },
         {
             sequelize,
-            modelName: 'Profile',
+            modelName: 'Variant',
         }
     );
-    return Profile;
+    return Variant;
 };

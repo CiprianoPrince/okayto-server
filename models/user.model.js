@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             address: {
                 allowNull: true,
-                type: DataTypes.STRING,
+                type: DataTypes.UUID,
             },
             phone: {
                 allowNull: true,

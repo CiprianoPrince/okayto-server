@@ -1,0 +1,272 @@
+[
+	{
+		"productID" : "07c3c5a6-10c9-4195-acc1-668301b5edde",
+		"name" : "Your Changing Body",
+		"description" : "Your Changing Body Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:28:23",
+		"updatedAt" : "2023-08-28 06:28:23"
+	},
+	{
+		"productID" : "081939af-4036-4267-a063-eb082a939bb0",
+		"name" : "Buffalo Bill&#x27;s Body Lotion - Vintage Distressed Horror",
+		"description" : "Buffalo Bill&#x27;s Body Lotion - Vintage Distressed Horror Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:08:45",
+		"updatedAt" : "2023-08-28 06:08:45"
+	},
+	{
+		"productID" : "0ce62ba3-6506-4b10-b9e9-62fc70ef3d64",
+		"name" : "The Prancing Pony",
+		"description" : "The Prancing Pony Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:24:49",
+		"updatedAt" : "2023-08-28 06:24:49"
+	},
+	{
+		"productID" : "0e406084-cdca-4e26-8a15-793d49206f68",
+		"name" : "The Bad Banana",
+		"description" : "The Bad Banana Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:23:40",
+		"updatedAt" : "2023-08-28 06:23:40"
+	},
+	{
+		"productID" : "1089e991-9943-4ee6-a41c-a7fd87b618f7",
+		"name" : "Black panther with snake tail",
+		"description" : "Badass Babe Poodle Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:07:11",
+		"updatedAt" : "2023-08-28 06:07:11"
+	},
+	{
+		"productID" : "14d8c710-b9e2-4df2-b41f-f1547d42235b",
+		"name" : "Hoot Hoot",
+		"description" : "Hoot Hoot Design shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:13:46",
+		"updatedAt" : "2023-08-28 06:13:46"
+	},
+	{
+		"productID" : "1524be35-9cf4-4101-9a7e-111f63d4106e",
+		"name" : "Lady Amalthea - The Last Unicorn",
+		"description" : "Lady Amalthea - The Last Unicorn",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:14:58",
+		"updatedAt" : "2023-08-28 06:14:58"
+	},
+	{
+		"productID" : "267fc950-7a68-4929-ba87-23f8a065c8e4",
+		"name" : "Four Horses of the Nostalgialypse",
+		"description" : "Four Horses of the Nostalgialypse",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:12:15",
+		"updatedAt" : "2023-08-28 06:12:15"
+	},
+	{
+		"productID" : "32eef116-47f1-44eb-b823-c19e714dad30",
+		"name" : "Trash Bandit",
+		"description" : "Trash Bandit Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:26:27",
+		"updatedAt" : "2023-08-28 06:26:27"
+	},
+	{
+		"productID" : "333c6543-91af-44ee-9db0-ba1790963018",
+		"name" : "Badass Babe Poodle",
+		"description" : "Badass Babe Poodle Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:06:37",
+		"updatedAt" : "2023-08-28 06:06:37"
+	},
+	{
+		"productID" : "37cca597-de43-413f-9b8e-46c90b838b3f",
+		"name" : "Serge",
+		"description" : "Serge Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:22:48",
+		"updatedAt" : "2023-08-28 06:22:48"
+	},
+	{
+		"productID" : "3a6af853-0928-4802-8975-5e95d42d6107",
+		"name" : "No Balance white logo",
+		"description" : "No Balance white logo Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:17:21",
+		"updatedAt" : "2023-08-28 06:17:21"
+	},
+	{
+		"productID" : "52be8666-43b5-4f58-a5b4-6599fbc76a65",
+		"name" : "Science",
+		"description" : "Science Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:22:24",
+		"updatedAt" : "2023-08-28 06:22:24"
+	},
+	{
+		"productID" : "59008c9f-d56a-428f-aed5-41d277b4e403",
+		"name" : "Raccoon with lavender",
+		"description" : "Raccoon with lavender Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:18:12",
+		"updatedAt" : "2023-08-28 06:18:12"
+	},
+	{
+		"productID" : "6288961b-bad6-4e16-a9db-1fa4e99dcd68",
+		"name" : "Electricity Will Kill You Kids",
+		"description" : "Electricity Will Kill You Kids",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:11:34",
+		"updatedAt" : "2023-08-28 06:11:34"
+	},
+	{
+		"productID" : "64aa1423-32f9-4ad5-a16b-0c1e9206f662",
+		"name" : "Aliens Motion Tracker",
+		"description" : "Aliens Motion Tracker Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:03:19",
+		"updatedAt" : "2023-08-28 06:03:19"
+	},
+	{
+		"productID" : "66b82f3b-dff8-48de-9372-3c09524e814f",
+		"name" : "You Shine Like a Disco Ball",
+		"description" : "You Shine Like a Disco Ball Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:27:53",
+		"updatedAt" : "2023-08-28 06:27:53"
+	},
+	{
+		"productID" : "74263517-745a-4059-a33e-6f1620f81a8e",
+		"name" : "Dwight Yoakam",
+		"description" : "Dwight Yoakam Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:11:09",
+		"updatedAt" : "2023-08-28 06:11:09"
+	},
+	{
+		"productID" : "77aa303a-a1cd-4bba-8850-c5294a010683",
+		"name" : "Tuesday Mood",
+		"description" : "Tuesday Mood Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:26:51",
+		"updatedAt" : "2023-08-28 06:26:51"
+	},
+	{
+		"productID" : "8f6e29ff-0525-41a4-b53a-71c8d6b723c8",
+		"name" : "São Jorge Cheese",
+		"description" : "São Jorge Cheese Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:21:32",
+		"updatedAt" : "2023-08-28 06:21:32"
+	},
+	{
+		"productID" : "a08deaa0-683e-4dc2-a13a-54650dbdacb2",
+		"name" : "Genesis",
+		"description" : "Genesis",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:12:35",
+		"updatedAt" : "2023-08-28 06:12:35"
+	},
+	{
+		"productID" : "a3255863-02e2-4008-ab42-31a982be7c08",
+		"name" : "Marvin Gaye - Vintage Pencil Drawing Style",
+		"description" : "Marvin Gaye - Vintage Pencil Drawing Style Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:15:40",
+		"updatedAt" : "2023-08-28 06:15:40"
+	},
+	{
+		"productID" : "b9612bc4-a2e0-4990-8540-21772ed74457",
+		"name" : "Translate",
+		"description" : "Translate Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:25:50",
+		"updatedAt" : "2023-08-28 06:25:50"
+	},
+	{
+		"productID" : "c2154976-9073-43f6-8bca-08f27d9464ba",
+		"name" : "Confidence is Key",
+		"description" : "Confidence is Key Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:10:32",
+		"updatedAt" : "2023-08-28 06:10:32"
+	},
+	{
+		"productID" : "c57c7cfc-41b0-4273-8b3f-4dfa19faf8f3",
+		"name" : "My Little Artax",
+		"description" : "My Little Artax Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:16:21",
+		"updatedAt" : "2023-08-28 06:16:21"
+	},
+	{
+		"productID" : "cad000b8-a655-4037-ace3-3b6ce35f768c",
+		"name" : "The Fork",
+		"description" : "The Fork Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:24:22",
+		"updatedAt" : "2023-08-28 06:24:22"
+	},
+	{
+		"productID" : "e45e4ef4-53e2-41bb-8aea-9088b098807b",
+		"name" : "Wandering Through Life",
+		"description" : "Wandering Through Life Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:27:25",
+		"updatedAt" : "2023-08-28 06:27:25"
+	},
+	{
+		"productID" : "f7b610b5-7c00-4e7b-b406-e96c725bd03e",
+		"name" : "Got any grapes",
+		"description" : "Got any grapes",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:13:11",
+		"updatedAt" : "2023-08-28 06:13:11"
+	},
+	{
+		"productID" : "fdd5097c-6ce9-4ee8-ae2f-c13ffbea75d1",
+		"name" : "I Left My Gender In My Other Shirt",
+		"description" : "I Left My Gender In My Other Shirt Design shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:14:22",
+		"updatedAt" : "2023-08-28 06:14:22"
+	},
+	{
+		"productID" : "fdfb6937-a3e5-4295-8d82-281ff40b673a",
+		"name" : "Rohan Riders",
+		"description" : "Rohan Riders Designed shirt",
+		"price" : 300.00,
+		"categoryID" : "a9830fd4-9a85-430a-a7d0-f5641136a59b",
+		"createdAt" : "2023-08-28 06:18:41",
+		"updatedAt" : "2023-08-28 06:18:41"
+	}
+]

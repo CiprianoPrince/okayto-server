@@ -1,7 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class Profile extends Model {
+    class Inventory extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
@@ -9,35 +9,44 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            this.belongsTo(models.User, { foreignKey: 'userID' });
+            this.belongsTo(models.Variant, { foreignKey: 'variantID' });
         }
     }
-    Profile.init(
+    Inventory.init(
         {
-            profileID: {
+            inventoryID: {
                 primaryKey: true,
                 allowNull: false,
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
             },
-            userID: {
+            variantID: {
                 allowNull: false,
                 type: DataTypes.UUID,
                 references: {
-                    model: 'users',
-                    key: 'userID',
+                    model: 'variants',
+                    key: 'variantID',
                 },
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
             },
-            role: {
+            quantityInStock: {
                 allowNull: false,
-                type: DataTypes.ENUM,
-                values: ['Admin', 'User', 'Guest'],
+                type: DataTypes.INTEGER,
+            },
+            reOrderThreshold: {
+                allowNull: true,
+                type: DataTypes.INTEGER,
+            },
+            lastRestockDate: {
+                allowNull: true,
+                type: DataTypes.DATE,
             },
         },
         {
             sequelize,
-            modelName: 'Profile',
+            modelName: 'Inventory',
         }
     );
-    return Profile;
+    return Inventory;
 };

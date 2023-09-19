@@ -1,7 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class Profile extends Model {
+    class Size extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
@@ -9,35 +9,27 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            this.belongsTo(models.User, { foreignKey: 'userID' });
+            this.hasMany(models.Variant, { foreignKey: 'sizeID' });
         }
     }
-    Profile.init(
+    Size.init(
         {
-            profileID: {
+            sizeID: {
                 primaryKey: true,
                 allowNull: false,
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
             },
-            userID: {
-                allowNull: false,
-                type: DataTypes.UUID,
-                references: {
-                    model: 'users',
-                    key: 'userID',
-                },
-            },
-            role: {
+            name: {
                 allowNull: false,
                 type: DataTypes.ENUM,
-                values: ['Admin', 'User', 'Guest'],
+                values: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
             },
         },
         {
             sequelize,
-            modelName: 'Profile',
+            modelName: 'Size',
         }
     );
-    return Profile;
+    return Size;
 };

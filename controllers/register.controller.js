@@ -9,13 +9,13 @@ const { validationResult } = require('express-validator');
 const { StatusCodes } = require('http-status-codes');
 const { generateMessage, sendResponse } = require('../helpers');
 
-exports.handleNewUser = async (request, response) => {
+exports.handleNewUser = async (req, res) => {
     try {
-        const errors = validationResult(request);
+        const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
             return sendResponse(
-                response,
+                res,
                 StatusCodes.BAD_REQUEST,
                 generateMessage.all.emptyData(),
                 null,
@@ -23,24 +23,20 @@ exports.handleNewUser = async (request, response) => {
             );
         }
 
-        const rawUserData = request.body;
+        const rawUserData = req.body;
 
         const hashedPwd = await bcrypt.hash(rawUserData?.password, 10);
         rawUserData.password = hashedPwd;
 
-        const dbUserData = await User.create(rawUserData, { role: 'Admin' });
-        sendResponse(
-            response,
-            StatusCodes.OK,
-            generateMessage.createOne.success('User'),
-            dbUserData
-        );
+        await User.create(rawUserData, { role: 'Admin' });
+
+        sendResponse(res, StatusCodes.CREATED, generateMessage.createOne.success('User'), null);
     } catch (error) {
         if (error instanceof ValidationError) {
             // handle validation error
         }
         sendResponse(
-            response,
+            res,
             StatusCodes.INTERNAL_SERVER_ERROR,
             generateMessage.createOne.failure('User'),
             null,

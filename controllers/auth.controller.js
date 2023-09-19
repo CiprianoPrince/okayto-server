@@ -23,17 +23,15 @@ exports.handleLogin = async (req, res) => {
     if (!match) return res.sendStatus(401); // Unauthorized
 
     // Get user role
-    const foundUserWithRole = await foundUser.getProfile();
-    const role = ROLES[foundUserWithRole.role];
-
-    console.log(foundUserWithRole.role);
+    const foundProfile = await foundUser.getProfile();
+    const foundUserRole = ROLES[foundProfile.role];
 
     // Create JWTs
     const accessToken = jwt.sign(
         {
             userInfo: {
                 userID: foundUser.userID,
-                role: role,
+                role: foundUserRole,
             },
         },
         process.env.ACCESS_TOKEN,
@@ -41,24 +39,25 @@ exports.handleLogin = async (req, res) => {
     );
 
     const refreshToken = jwt.sign(
-        { userID: foundUser.userID, role: role },
+        { userID: foundUser.userID, role: foundUserRole },
         process.env.REFRESH_TOKEN,
         {
             expiresIn: '1d',
         }
     );
 
+    console.log(refreshToken);
+
     // Save new refresh token for the user
-    foundUser.createRefreshToken({ token: refreshToken });
+    await foundUser.createRefreshToken({ token: refreshToken });
 
     // Check for possible token reuse and handle accordingly
     if (req.cookies?.jwt) {
-        const existingToken = req.cookies.jwt;
-        const foundToken = await RefreshToken.findOne({ where: { token: existingToken } });
+        const existingRefreshToken = req.cookies.jwt;
+        const foundToken = await RefreshToken.findOne({ where: { token: existingRefreshToken } });
 
         // Detected refresh token reuse!
         if (!foundToken) {
-            console.log('Attempted refresh token reuse at login!');
             // clear out ALL previous refresh tokens
             RefreshToken.destroy({ where: { userID: foundUser.userID } });
         }
