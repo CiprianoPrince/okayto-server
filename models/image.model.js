@@ -9,23 +9,23 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            this.belongsTo(models.ProductColor, { foreignKey: 'productColorID' });
+            this.belongsTo(models.ProductColor, { foreignKey: 'productColorId' });
         }
     }
     Image.init(
         {
-            imageID: {
+            imageId: {
                 primaryKey: true,
                 allowNull: false,
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
             },
-            productColorID: {
+            productColorId: {
                 allowNull: false,
                 type: DataTypes.UUID,
                 references: {
                     model: 'productcolors',
-                    key: 'productColorID',
+                    key: 'productColorId',
                 },
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',

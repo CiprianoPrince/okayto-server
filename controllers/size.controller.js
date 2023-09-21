@@ -6,9 +6,7 @@ const { validationResult } = require('express-validator');
 const { StatusCodes } = require('http-status-codes');
 
 // Importing helper functions
-const sendResponse = require('../helpers/sendResponse');
-const generateMessage = require('../helpers/generateMessage');
-const getModelName = require('../helpers/getModelName');
+const { sendResponse, generateMessage, getModelName } = require('../helpers');
 
 // Fetching the model name based on the filename
 const modelName = getModelName(__filename);
@@ -53,15 +51,15 @@ exports.findAll = async (req, res) => {
 // Fetch size by primary key
 exports.findByPk = async (req, res) => {
     try {
-        const sizeID = req.params.sizeID;
-        const foundSize = await Size.findByPk(sizeID);
+        const sizeId = req.params.sizeId;
+        const foundSize = await Size.findByPk(sizeId);
 
         // If size not found, send BAD_REQUEST status code
         if (!foundSize) {
             return sendResponse(
                 res,
                 StatusCodes.BAD_REQUEST,
-                generateMessage.findByPk.fail(modelName, sizeID)
+                generateMessage.findByPk.fail(modelName, sizeId)
             );
         }
 
@@ -143,12 +141,12 @@ exports.updateOne = async (req, res) => {
     }
 
     try {
-        const sizeID = req.params.sizeID;
+        const sizeId = req.params.sizeId;
         const sizeData = req.body;
 
         // Update the size data
         const [updatedSizeCount] = await Size.update(sizeData, {
-            where: { sizeID },
+            where: { sizeId },
         });
 
         // If no rows affected, send BAD_REQUEST status code
@@ -183,10 +181,10 @@ exports.updateOne = async (req, res) => {
 // Delete a size by primary key
 exports.deleteOne = async (req, res) => {
     try {
-        const sizeID = req.params.sizeID;
+        const sizeId = req.params.sizeId;
 
         // Delete the size
-        const deletedSizeCount = await Size.destroy({ where: { sizeID } });
+        const deletedSizeCount = await Size.destroy({ where: { sizeId } });
 
         // If no rows deleted, send BAD_REQUEST status code
         if (!deletedSizeCount) {

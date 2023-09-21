@@ -3,28 +3,28 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('Variants', {
-            variantID: {
+            variantId: {
                 primaryKey: true,
                 allowNull: false,
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4,
             },
-            productColorID: {
+            productColorId: {
                 allowNull: false,
                 type: Sequelize.UUID,
                 references: {
                     model: 'productcolors',
-                    key: 'productColorID',
+                    key: 'productColorId',
                 },
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',
             },
-            sizeID: {
+            sizeId: {
                 allowNull: false,
                 type: Sequelize.UUID,
                 references: {
                     model: 'sizes',
-                    key: 'sizeID',
+                    key: 'sizeId',
                 },
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',

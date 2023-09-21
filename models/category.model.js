@@ -9,18 +9,23 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            this.hasMany(models.Product, { foreignKey: 'categoryID' });
+            this.hasMany(models.Product, { foreignKey: 'categoryId' });
         }
     }
     Category.init(
         {
-            categoryID: {
+            categoryId: {
                 primaryKey: true,
                 allowNull: false,
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
             },
+
             name: {
+                allowNull: false,
+                type: DataTypes.STRING,
+            },
+            slug: {
                 allowNull: false,
                 type: DataTypes.STRING,
             },

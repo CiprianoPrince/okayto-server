@@ -3,18 +3,18 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('Profiles', {
-            profileID: {
+            profileId: {
                 primaryKey: true,
                 allowNull: false,
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4,
             },
-            userID: {
+            userId: {
                 allowNull: false,
                 type: Sequelize.UUID,
                 references: {
                     model: 'users',
-                    key: 'userID',
+                    key: 'userId',
                 },
                 onDelete: 'CASCADE',
             },

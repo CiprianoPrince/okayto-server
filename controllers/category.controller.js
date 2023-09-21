@@ -6,9 +6,7 @@ const { validationResult } = require('express-validator');
 const { StatusCodes } = require('http-status-codes');
 
 // Importing helper functions
-const sendResponse = require('../helpers/sendResponse');
-const generateMessage = require('../helpers/generateMessage');
-const getModelName = require('../helpers/getModelName');
+const { sendResponse, generateMessage, getModelName } = require('../helpers');
 
 // Fetching the model name based on the filename
 const modelName = getModelName(__filename);
@@ -16,7 +14,7 @@ const modelName = getModelName(__filename);
 // Fetch all categories
 exports.findAll = async (req, res) => {
     try {
-        const foundCategories = await Category.findAll({ attributes: ['categoryID', 'name'] });
+        const foundCategories = await Category.findAll({ attributes: ['categoryId', 'name'] });
 
         // If there are no categories, send NO_CONTENT status code
         if (!foundCategories.length) {
@@ -53,15 +51,15 @@ exports.findAll = async (req, res) => {
 // Fetch category by primary key
 exports.findByPk = async (req, res) => {
     try {
-        const categoryID = req.params.categoryID;
-        const foundCategory = await Category.findByPk(categoryID);
+        const categoryId = req.params.categoryId;
+        const foundCategory = await Category.findByPk(categoryId);
 
         // If category not found, send BAD_REQUEST status code
         if (!foundCategory) {
             return sendResponse(
                 res,
                 StatusCodes.BAD_REQUEST,
-                generateMessage.findByPk.fail(modelName, categoryID)
+                generateMessage.findByPk.fail(modelName, categoryId)
             );
         }
 
@@ -148,12 +146,12 @@ exports.updateOne = async (req, res) => {
     }
 
     try {
-        const categoryID = req.params.categoryID;
+        const categoryId = req.params.categoryId;
         const categoryData = req.body;
 
         // Update the category data
         const [updatedCategoryCount] = await Category.update(categoryData, {
-            where: { categoryID },
+            where: { categoryId },
         });
 
         // If no rows affected, send BAD_REQUEST status code
@@ -188,10 +186,10 @@ exports.updateOne = async (req, res) => {
 // Delete a category by primary key
 exports.deleteOne = async (req, res) => {
     try {
-        const categoryID = req.params.categoryID;
+        const categoryId = req.params.categoryId;
 
         // Delete the category
-        const deletedCategoryCount = await Category.destroy({ where: { categoryID } });
+        const deletedCategoryCount = await Category.destroy({ where: { categoryId } });
 
         // If no rows deleted, send BAD_REQUEST status code
         if (!deletedCategoryCount) {

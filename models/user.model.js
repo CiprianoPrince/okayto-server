@@ -9,13 +9,14 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            this.hasOne(models.Profile, { foreignKey: 'userID' });
-            this.hasOne(models.RefreshToken, { foreignKey: 'userID' });
+            this.hasOne(models.Profile, { foreignKey: 'userId' });
+            this.hasOne(models.RefreshToken, { foreignKey: 'userId' });
+            this.hasOne(models.Address, { foreignKey: 'userId' });
         }
     }
     User.init(
         {
-            userID: {
+            userId: {
                 primaryKey: true,
                 allowNull: false,
                 type: DataTypes.UUID,
@@ -62,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
                     const role = options.role;
 
                     await sequelize.models.Profile.create({
-                        userID: user.userID,
+                        userId: user.userId,
                         role: role,
                     });
                 },
@@ -73,12 +74,12 @@ module.exports = (sequelize, DataTypes) => {
 
                     // delete associated Profile
                     await sequelize.models.Profile.destroy({
-                        where: { userID: user.userID },
+                        where: { userId: user.userId },
                     });
 
                     // delete associated RefreshToken
                     await sequelize.models.RefreshToken.destroy({
-                        where: { userID: user.userID },
+                        where: { userId: user.userId },
                     });
                 },
             },

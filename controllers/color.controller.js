@@ -6,9 +6,7 @@ const { validationResult } = require('express-validator');
 const { StatusCodes } = require('http-status-codes');
 
 // Importing helper functions
-const sendResponse = require('../helpers/sendResponse');
-const generateMessage = require('../helpers/generateMessage');
-const getModelName = require('../helpers/getModelName');
+const { sendResponse, generateMessage, getModelName } = require('../helpers');
 
 // Fetching the model name based on the filename
 const modelName = getModelName(__filename);
@@ -53,15 +51,15 @@ exports.findAll = async (req, res) => {
 // Fetch color by primary key
 exports.findByPk = async (req, res) => {
     try {
-        const colorID = req.params.colorID;
-        const foundColor = await Color.findByPk(colorID);
+        const colorId = req.params.colorId;
+        const foundColor = await Color.findByPk(colorId);
 
         // If color not found, send BAD_REQUEST status code
         if (!foundColor) {
             return sendResponse(
                 res,
                 StatusCodes.BAD_REQUEST,
-                generateMessage.findByPk.fail(modelName, colorID)
+                generateMessage.findByPk.fail(modelName, colorId)
             );
         }
 
@@ -143,12 +141,12 @@ exports.updateOne = async (req, res) => {
     }
 
     try {
-        const colorID = req.params.colorID;
+        const colorId = req.params.colorId;
         const rawColorData = req.body;
 
         // Update the color data
         const [updatedColorCount] = await Color.update(rawColorData, {
-            where: { colorID },
+            where: { colorId },
         });
 
         // If no rows affected, send BAD_REQUEST status code
@@ -183,10 +181,10 @@ exports.updateOne = async (req, res) => {
 // Delete a color by primary key
 exports.deleteOne = async (req, res) => {
     try {
-        const colorID = req.params.colorID;
+        const colorId = req.params.colorId;
 
         // Delete the color
-        const deletedColorCount = await Color.destroy({ where: { colorID } });
+        const deletedColorCount = await Color.destroy({ where: { colorId } });
 
         // If no rows deleted, send BAD_REQUEST status code
         if (!deletedColorCount) {

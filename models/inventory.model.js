@@ -9,23 +9,23 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            this.belongsTo(models.Variant, { foreignKey: 'variantID' });
+            this.belongsTo(models.Variant, { foreignKey: 'variantId' });
         }
     }
     Inventory.init(
         {
-            inventoryID: {
+            inventoryId: {
                 primaryKey: true,
                 allowNull: false,
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
             },
-            variantID: {
+            variantId: {
                 allowNull: false,
                 type: DataTypes.UUID,
                 references: {
                     model: 'variants',
-                    key: 'variantID',
+                    key: 'variantId',
                 },
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',

@@ -13,10 +13,7 @@ const { validationResult } = require('express-validator');
 const { StatusCodes } = require('http-status-codes');
 
 // Import helper functions
-const sendResponse = require('../helpers/sendResponse');
-const generateMessage = require('../helpers/generateMessage');
-const getModelName = require('../helpers/getModelName');
-const deleteImageSync = require('../helpers/deleteImageSync.helper');
+const { sendResponse, generateMessage, getModelName, deleteImageSync } = require('../helpers');
 
 // Fetch the model name based on the filename
 const modelName = getModelName(__filename);
@@ -25,19 +22,19 @@ const modelName = getModelName(__filename);
 exports.findAll = async (req, res) => {
     try {
         // const variants = await ProductVariant.findAll();
-        const productID = req.params.productID;
+        const productId = req.params.productId;
 
         const foundVariants = await ProductVariant.findAll({
-            where: { productID },
-            attributes: ['productID', 'variantID'],
+            where: { productId },
+            attributes: ['productId', 'variantId'],
             include: [
                 {
                     model: Size,
-                    attributes: ['sizeID', 'name'],
+                    attributes: ['sizeId', 'name'],
                 },
                 {
                     model: Color,
-                    attributes: ['colorID', 'name'],
+                    attributes: ['colorId', 'name'],
                 },
                 {
                     model: Variant,
@@ -88,14 +85,14 @@ exports.findAll = async (req, res) => {
 // Fetch variant by primary key
 exports.findByPk = async (req, res) => {
     try {
-        const variantID = req.params.variantID;
-        const dbVariantData = await Variant.findByPk(variantID);
+        const variantId = req.params.variantId;
+        const dbVariantData = await Variant.findByPk(variantId);
 
         if (!dbVariantData) {
             return sendResponse(
                 res,
                 StatusCodes.BAD_REQUEST,
-                generateMessage.findByPk.fail(modelName, variantID)
+                generateMessage.findByPk.fail(modelName, variantId)
             );
         }
 
@@ -138,31 +135,31 @@ exports.createOne = async (req, res) => {
     }
 
     try {
-        // Extract product ID from req params
-        const productID = req.params.productID;
+        // Extract product Id from req params
+        const productId = req.params.productId;
 
         // Check if product exists
-        const foundProduct = await Product.findByPk(productID);
+        const foundProduct = await Product.findByPk(productId);
 
         if (!foundProduct) {
             return sendResponse(
                 res,
                 StatusCodes.NOT_FOUND,
-                generateMessage.findByPk.fail('Product', productID)
+                generateMessage.findByPk.fail('Product', productId)
             );
         }
 
         // Extract variant data from req body
-        const { sizeID, colorID, quantityInStock } = req.body;
+        const { sizeId, colorId, quantityInStock } = req.body;
         const imagePath = req.file.filename;
 
         const variantData = {
-            productID,
+            productId,
         };
 
         const extraData = {
-            sizeID,
-            colorID,
+            sizeId,
+            colorId,
             inventory: {
                 quantityInStock,
                 reOrderThreshold: req.body.reOrderThreshold ?? 50,
@@ -225,12 +222,12 @@ exports.updateOne = async (req, res) => {
     }
 
     try {
-        const variantID = req.params.variantID;
+        const variantId = req.params.variantId;
         const rawVariantData = req.body;
 
         // Get associated image(s) for the variant
         const variantWithImages = await Variant.findOne({
-            where: { variantID },
+            where: { variantId },
             include: [ImageModel],
         });
 
@@ -242,7 +239,7 @@ exports.updateOne = async (req, res) => {
         }
 
         const [affectedRows] = await Variant.update(rawVariantData, {
-            where: { variantID },
+            where: { variantId },
         });
 
         if (!affectedRows) {
@@ -275,11 +272,11 @@ exports.updateOne = async (req, res) => {
 // Delete a variant by primary key
 exports.deleteOne = async (req, res) => {
     try {
-        const variantID = req.params.variantID;
+        const variantId = req.params.variantId;
 
         // Get associated image(s) for the variant
         const variantWithImages = await Variant.findOne({
-            where: { variantID },
+            where: { variantId },
             include: [ImageModel],
         });
 
@@ -290,7 +287,7 @@ exports.deleteOne = async (req, res) => {
             await deleteImageSync(foundImage.imagePath);
         }
 
-        const deletedRows = await Variant.destroy({ where: { variantID } });
+        const deletedRows = await Variant.destroy({ where: { variantId } });
 
         if (!deletedRows) {
             return sendResponse(

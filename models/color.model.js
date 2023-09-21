@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            this.hasMany(models.ProductColor, { foreignKey: 'colorID' });
+            this.hasMany(models.ProductColor, { foreignKey: 'colorId' });
         }
     }
     Color.init(
         {
-            colorID: {
+            colorId: {
                 primaryKey: true,
                 allowNull: false,
                 type: DataTypes.UUID,

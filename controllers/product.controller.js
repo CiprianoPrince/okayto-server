@@ -11,9 +11,7 @@ const { validationResult } = require('express-validator');
 const { StatusCodes } = require('http-status-codes');
 
 // Import helper functions
-const sendResponse = require('../helpers/sendResponse');
-const generateMessage = require('../helpers/generateMessage');
-const getModelName = require('../helpers/getModelName');
+const { sendResponse, generateMessage, getModelName } = require('../helpers');
 
 // Fetch the model name based on the filename
 const modelName = getModelName(__filename);
@@ -24,11 +22,11 @@ exports.findAll = async (req, res) => {
         // Fetch all products from the database
         const foundProducts = await Product.findAll({
             attributes: [
-                'productID',
+                'productId',
                 'name',
                 'description',
                 'price',
-                'categoryID',
+                'categoryId',
                 [col('ProductImage.imagePath'), 'imagePath'], // Custom alias
                 [col('ProductImage.altText'), 'altText'], // Custom alias
                 [col('Colors.name'), 'color'],
@@ -86,16 +84,16 @@ exports.findAll = async (req, res) => {
 // Fetch product by primary key
 exports.findByPk = async (req, res) => {
     try {
-        // Extract product ID from req params
-        const productID = req.params.productID;
-        // Fetch the product with the specified ID
-        const foundProduct = await Product.findByPk(productID, {
+        // Extract product Id from req params
+        const productId = req.params.productId;
+        // Fetch the product with the specified Id
+        const foundProduct = await Product.findByPk(productId, {
             attributes: [
-                'productID',
+                'productId',
                 'name',
                 'description',
                 'price',
-                'categoryID',
+                'categoryId',
                 [col('ProductImage.imagePath'), 'imagePath'], // Custom alias
                 [col('ProductImage.altText'), 'altText'], // Custom alias
                 [col('Colors.name'), 'color'],
@@ -122,7 +120,7 @@ exports.findByPk = async (req, res) => {
             return sendResponse(
                 res,
                 StatusCodes.BAD_REQUEST,
-                generateMessage.findByPk.fail(modelName, productID)
+                generateMessage.findByPk.fail(modelName, productId)
             );
         }
 
@@ -166,6 +164,8 @@ exports.createOne = async (req, res) => {
         );
     }
 
+    return res.send(req.body);
+
     try {
         // Extract variant data from req body
         const productData = req.body;
@@ -179,9 +179,7 @@ exports.createOne = async (req, res) => {
         };
 
         // Create a new variant for the product
-        const createdProduct = await Product.create(productData, {
-            extraData: extraData,
-        });
+        const createdProduct = await Product.create(productData);
 
         // Send the created product data with OK status code
         sendResponse(
@@ -224,13 +222,13 @@ exports.updateOne = async (req, res) => {
     }
 
     try {
-        // Extract product ID and data from req
-        const productID = req.params.productID;
+        // Extract product Id and data from req
+        const productId = req.params.productId;
         const productData = req.body;
 
-        // Update the product with the specified ID
+        // Update the product with the specified Id
         const [updatedProductCount] = await Product.update(productData, {
-            where: { productID },
+            where: { productId },
         });
 
         // If no rows affected, send BAD_REQUEST status code
@@ -266,11 +264,11 @@ exports.updateOne = async (req, res) => {
 // Delete a product by primary key
 exports.deleteOne = async (req, res) => {
     try {
-        // Extract product ID from req params
-        const productID = req.params.productID;
+        // Extract product Id from req params
+        const productId = req.params.productId;
 
-        // Delete the product with the specified ID
-        const deletedProductCount = await Product.destroy({ where: { productID } });
+        // Delete the product with the specified Id
+        const deletedProductCount = await Product.destroy({ where: { productId } });
 
         // If no rows deleted, send BAD_REQUEST status code
         if (!deletedProductCount) {

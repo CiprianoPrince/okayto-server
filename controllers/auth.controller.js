@@ -30,7 +30,7 @@ exports.handleLogin = async (req, res) => {
     const accessToken = jwt.sign(
         {
             userInfo: {
-                userID: foundUser.userID,
+                userId: foundUser.userId,
                 role: foundUserRole,
             },
         },
@@ -39,7 +39,7 @@ exports.handleLogin = async (req, res) => {
     );
 
     const refreshToken = jwt.sign(
-        { userID: foundUser.userID, role: foundUserRole },
+        { userId: foundUser.userId, role: foundUserRole },
         process.env.REFRESH_TOKEN,
         {
             expiresIn: '1d',
@@ -59,7 +59,7 @@ exports.handleLogin = async (req, res) => {
         // Detected refresh token reuse!
         if (!foundToken) {
             // clear out ALL previous refresh tokens
-            RefreshToken.destroy({ where: { userID: foundUser.userID } });
+            RefreshToken.destroy({ where: { userId: foundUser.userId } });
         }
 
         res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });

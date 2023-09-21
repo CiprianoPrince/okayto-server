@@ -9,23 +9,23 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            this.belongsTo(models.User, { foreignKey: 'userID' });
+            this.belongsTo(models.User, { foreignKey: 'userId' });
         }
     }
     RefreshToken.init(
         {
-            refreshTokenID: {
+            refreshTokenId: {
                 primaryKey: true,
                 allowNull: false,
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
             },
-            userID: {
+            userId: {
                 allowNull: false,
                 type: DataTypes.UUID,
                 references: {
                     model: 'users',
-                    key: 'userID',
+                    key: 'userId',
                 },
             },
             token: {

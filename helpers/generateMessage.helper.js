@@ -8,7 +8,7 @@ module.exports = {
     },
     findByPk: {
         success: (model) => `Successfully retrieved ${model}.`,
-        fail: (model, modelID) => `No ${model} found with ID: ${modelID}.`,
+        fail: (model, modelId) => `No ${model} found with Id: ${modelId}.`,
         error: (model) => `Failed to retrieve ${model} data.`,
     },
     createOne: {
@@ -18,12 +18,12 @@ module.exports = {
     },
     updateOne: {
         success: (model) => `Successfully updated ${model}.`,
-        fail: (model, modelID) => `No ${model} found with ID: ${modelID}.`,
+        fail: (model, modelId) => `No ${model} found with Id: ${modelId}.`,
         error: (model) => `Failed to update ${model}.`,
     },
     deleteOne: {
         success: (model) => `Successfully deleted ${model}.`,
-        fail: (model, modelID) => `No ${model} found with ID: ${modelID}.`,
+        fail: (model, modelId) => `No ${model} found with Id: ${modelId}.`,
         error: (model) => `Failed to delete ${model}.`,
     },
 };

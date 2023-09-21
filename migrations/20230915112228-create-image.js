@@ -3,18 +3,18 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('Images', {
-            imageID: {
+            imageId: {
                 primaryKey: true,
                 allowNull: false,
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4,
             },
-            productColorID: {
+            productColorId: {
                 allowNull: false,
                 type: Sequelize.UUID,
                 references: {
                     model: 'productcolors',
-                    key: 'productColorID',
+                    key: 'productColorId',
                 },
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',

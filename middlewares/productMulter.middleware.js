@@ -1,5 +1,5 @@
 const multer = require('multer');
-const toImageUrl = require('../../utils/toImageUrl');
+const { toImageUrl } = require('../utils');
 const storage = multer.diskStorage({
     destination: (request, file, cb) => {
         cb(null, 'storage/uploads/images/products');
@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
         const fileExtension = file.originalname.split('.').pop();
 
         const urlEncodedName = toImageUrl(request.body.name);
-        // Construct the filename
+        // Construct the filename`
         const filename = `${urlEncodedName}.${fileExtension}`;
 
         cb(null, filename);

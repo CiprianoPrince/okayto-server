@@ -9,15 +9,24 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            this.belongsTo(models.User, { foreignKey: 'userId' });
         }
     }
     Address.init(
         {
-            addressID: {
+            addressId: {
                 primaryKey: true,
                 allowNull: false,
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
+            },
+            userId: {
+                allowNull: false,
+                type: DataTypes.UUID,
+                references: {
+                    model: 'users',
+                    key: 'userId',
+                },
             },
         },
         {

@@ -27,12 +27,12 @@ exports.handleRefreshToken = async (req, res) => {
     // If the user is not found, this might indicate an attempted refresh token reuse
     if (!foundUser) {
         jwt.verify(existingToken, process.env.REFRESH_TOKEN, async (err, decoded) => {
-            // If there's an error in verifying the JWT or if the user ID doesn't match, return a 403 Forbidden status
+            // If there's an error in verifying the JWT or if the user Id doesn't match, return a 403 Forbidden status
             if (err) return res.sendStatus(403);
 
             // Log attempted reuse and delete the refresh token from the database
             console.log('attempted refresh token reuse!');
-            await RefreshToken.destroy({ where: { userID: decoded.userID } });
+            await RefreshToken.destroy({ where: { userId: decoded.userId } });
         });
         return res.sendStatus(403); //Forbidden
     }
@@ -42,8 +42,8 @@ exports.handleRefreshToken = async (req, res) => {
 
     // Verify the JWT with the refresh token secret
     jwt.verify(existingToken, process.env.REFRESH_TOKEN, async (err, decoded) => {
-        // If there's an error in verifying the JWT or if the user ID doesn't match, return a 403 Forbidden status
-        if (err || foundUser.userID !== decoded.userID) {
+        // If there's an error in verifying the JWT or if the user Id doesn't match, return a 403 Forbidden status
+        if (err || foundUser.userId !== decoded.userId) {
             if (err) console.log('expired refresh token');
             return res.sendStatus(403);
         }
@@ -52,7 +52,7 @@ exports.handleRefreshToken = async (req, res) => {
         const accessToken = jwt.sign(
             {
                 UserInfo: {
-                    userID: decoded.userID,
+                    userId: decoded.userId,
                     role: decoded.role,
                 },
             },
@@ -62,7 +62,7 @@ exports.handleRefreshToken = async (req, res) => {
 
         // Create a new refresh token
         const refreshToken = jwt.sign(
-            { userID: decoded.userID, role: decoded.role },
+            { userId: decoded.userId, role: decoded.role },
             process.env.REFRESH_TOKEN,
             {
                 expiresIn: '1d',

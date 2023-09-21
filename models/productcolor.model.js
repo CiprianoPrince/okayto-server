@@ -9,34 +9,35 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            this.belongsTo(models.Product, { foreignKey: 'productID' });
-            this.belongsTo(models.Color, { foreignKey: 'colorID' });
+            this.belongsTo(models.Product, { foreignKey: 'productId' });
+            this.belongsTo(models.Color, { foreignKey: 'colorId' });
+            this.hasOne(models.Image, { foreignKey: 'productColorId' });
         }
     }
     ProductColor.init(
         {
-            productColorID: {
+            productColorId: {
                 primaryKey: true,
                 allowNull: false,
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
             },
-            productID: {
+            productId: {
                 allowNull: false,
                 type: DataTypes.UUID,
                 references: {
                     model: 'products',
-                    key: 'productID',
+                    key: 'productId',
                 },
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',
             },
-            colorID: {
+            colorId: {
                 allowNull: false,
                 type: DataTypes.UUID,
                 references: {
                     model: 'colors',
-                    key: 'colorID',
+                    key: 'colorId',
                 },
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',
@@ -45,6 +46,21 @@ module.exports = (sequelize, DataTypes) => {
         {
             sequelize,
             modelName: 'ProductColor',
+            hooks: {
+                afterCreate: async (productColor, options) => {
+                    const { sequelize } = productColor;
+
+                    // Accessing extra data from options
+                    const imageData = options.extraData.image;
+
+                    // Create associated Image
+                    await sequelize.models.Image.create({ 
+                        productColorId: productColor.productColorId,
+                        imagePath: imageData.imagePath,
+                        altText: imageData.altText,
+                    });
+                },
+            },
         }
     );
     return ProductColor;

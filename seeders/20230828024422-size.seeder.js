@@ -1,5 +1,7 @@
 'use strict';
-const readJsonFile = require('../utils/readJsonFile');
+
+const { readJsonFile } = require('../utils');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
@@ -10,7 +12,7 @@ module.exports = {
          */
         await queryInterface.bulkInsert(
             'Sizes',
-            await readJsonFile('./storage/data/sizes.json'),
+            await readJsonFile('./storage/json/sizes.json'),
             {}
         );
     },

@@ -1,36 +1,36 @@
 const { body } = require('express-validator');
 
-exports.validateproductID = [
-    body('productID')
+exports.validateproductId = [
+    body('productId')
         .trim()
         .notEmpty()
-        .withMessage('productID is required')
+        .withMessage('productId is required')
         .matches(
             /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/
         )
-        .withMessage('productID must be a valid UUID V4'),
+        .withMessage('productId must be a valid UUID V4'),
 ];
 
-exports.validateSizeID = [
-    body('sizeID')
+exports.validateSizeId = [
+    body('sizeId')
         .trim()
         .notEmpty()
-        .withMessage('sizeID is required')
+        .withMessage('sizeId is required')
         .matches(
             /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/
         )
-        .withMessage('sizeID must be a valid UUID V4'),
+        .withMessage('sizeId must be a valid UUID V4'),
 ];
 
-exports.validateColorID = [
-    body('colorID')
+exports.validateColorId = [
+    body('colorId')
         .trim()
         .notEmpty()
-        .withMessage('colorID is required')
+        .withMessage('colorId is required')
         .matches(
             /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/
         )
-        .withMessage('colorID must be a valid UUID V4'),
+        .withMessage('colorId must be a valid UUID V4'),
 ];
 
 // exports.validateSize = [

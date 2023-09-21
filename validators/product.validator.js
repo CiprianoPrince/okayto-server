@@ -1,14 +1,14 @@
 const { body } = require('express-validator');
 
-exports.validateCategoryID = [
-    body('categoryID')
+exports.validateCategoryId = [
+    body('categoryId')
         .trim()
         .notEmpty()
-        .withMessage('categoryID is required')
+        .withMessage('categoryId is required')
         .matches(
             /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/
         )
-        .withMessage('categoryID must be a valid UUID V4'),
+        .withMessage('categoryId must be a valid UUID V4'),
 ];
 
 exports.validateName = [
@@ -45,24 +45,24 @@ exports.validatePrice = [
         .toFloat(), // Convert the value to float after validation
 ];
 
-exports.validateSizeID = [
-    body('sizeID')
+exports.validateSizeId = [
+    body('sizeId')
         .trim()
         .notEmpty()
-        .withMessage('sizeID is required')
+        .withMessage('sizeId is required')
         .matches(
             /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/
         )
-        .withMessage('sizeID must be a valid UUID V4'),
+        .withMessage('sizeId must be a valid UUID V4'),
 ];
 
-exports.validateColorID = [
-    body('colorID')
+exports.validateColorId = [
+    body('colorId')
         .trim()
         .notEmpty()
-        .withMessage('colorID is required')
+        .withMessage('colorId is required')
         .matches(
             /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/
         )
-        .withMessage('colorID must be a valid UUID V4'),
+        .withMessage('colorId must be a valid UUID V4'),
 ];
