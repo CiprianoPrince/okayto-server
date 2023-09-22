@@ -37,7 +37,10 @@ module.exports = {
     },
     createOne: {
         success: (model) => `Successfully created ${model}.`,
-        fail: () => 'Some fields are missing or have incorrect values.',
+        fail: (message) => {
+            if (message) return message;
+            return 'Some fields are missing or have incorrect values.';
+        },
         error: (model) => `Failed to create ${model}.`,
     },
     updateOne: {

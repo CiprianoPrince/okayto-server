@@ -5,19 +5,20 @@ const ProductModel = db.Product;
 const SizeModel = db.Size;
 const ColorModel = db.Color;
 
+const variantImagesPath = 'storage/uploads/images/variants';
+
 const storage = multer.diskStorage({
-    destination: (request, file, cb) => {
-        cb(null, 'storage/uploads/images/variants');
+    destination: (req, file, cb) => {
+        cb(null, variantImagesPath);
     },
-    filename: async (request, file, cb) => {
-        const productId = request.params.productId;
-        const sizeId = request.body.sizeId;
-        const colorId = request.body.colorId;
+    filename: async (req, file, cb) => {
+        const productId = req.params.productId;
+        const sizeId = req.body.sizeId;
+        const colorId = req.body.colorId;
 
         // Extract file extension
         const fileExtension = file.originalname.split('.').pop();
 
-        console.log(productId);
         const foundProduct = await ProductModel.findByPk(productId, { attributes: ['name'] });
         const foundSize = await SizeModel.findByPk(sizeId, { attributes: ['name'] });
         const foundColor = await ColorModel.findByPk(colorId, { attributes: ['name'] });
@@ -32,4 +33,13 @@ const storage = multer.diskStorage({
     },
 });
 
-module.exports = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+    // If the name is not in the request body, reject the file.
+    if (!Object.values(req.body).every(Boolean)) return cb(null, false); // Rejects the file
+    cb(null, true); // Accepts the file
+};
+
+module.exports = multer({
+    storage: storage,
+    fileFilter: fileFilter,
+});

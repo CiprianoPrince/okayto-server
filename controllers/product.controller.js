@@ -11,7 +11,14 @@ const { validationResult } = require('express-validator');
 const { StatusCodes } = require('http-status-codes');
 
 // Import helper functions
-const { sendResponse, generateMessage, getModelName } = require('../helpers');
+const {
+    sendResponse,
+    generateMessage,
+    getModelName,
+    formatValidationError,
+} = require('../helpers');
+
+const { toSlug } = require('../utils');
 
 // Fetch the model name based on the filename
 const modelName = getModelName(__filename);
@@ -150,36 +157,36 @@ exports.findByPk = async (req, res) => {
 
 // Create a new product
 exports.createOne = async (req, res) => {
-    // Validate the req data
-    const errors = validationResult(req);
-
-    // If validation errors exist, send BAD_REQUEST status code
-    if (!errors.isEmpty()) {
-        return sendResponse(
-            res,
-            StatusCodes.BAD_REQUEST,
-            generateMessage.createOne.fail(),
-            null,
-            errors.array()
-        );
-    }
-
-    return res.send(req.body);
-
     try {
-        // Extract variant data from req body
-        const productData = req.body;
-        const imagePath = req.file.filename;
+        // Validate the req data
+        const errors = validationResult(req);
 
+        // If validation errors exist, send BAD_REQUEST status code
+        if (!errors.isEmpty()) {
+            return sendResponse(
+                res,
+                StatusCodes.BAD_REQUEST,
+                generateMessage.createOne.fail(),
+                null,
+                errors.formatWith(formatValidationError).mapped()
+            );
+        }
+
+        // Extract variant data from req body
+        const rawProductData = req.body;
+        const productSlug = toSlug(`${rawProductData.name}-tshirt`);
+        const productData = { ...rawProductData, slug: productSlug };
+
+        const imagePath = req.file?.filename;
         const extraData = {
             image: {
                 imagePath: imagePath,
-                altText: `${productData.name} Image`,
+                altText: productData.name,
             },
         };
 
         // Create a new variant for the product
-        const createdProduct = await Product.create(productData);
+        const createdProduct = await Product.create(productData, { extraData });
 
         // Send the created product data with OK status code
         sendResponse(
@@ -249,6 +256,7 @@ exports.updateOne = async (req, res) => {
             // Handle validation error
         }
 
+        console.log(error);
         // Send INTERNAL_SERVER_ERROR status code for other errors
         sendResponse(
             res,

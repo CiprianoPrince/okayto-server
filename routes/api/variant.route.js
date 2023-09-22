@@ -24,7 +24,7 @@ module.exports = (app) => {
     router.post(
         '/:productId/variants',
         verifyRoles(ROLES.ADMIN),
-        uploadVariantImage.single('variantImage'),
+        uploadVariantImage.single('image'),
         variantValidator.validateColorId,
         variantValidator.validateSizeId,
         variantValidator.validateQuantityInStock,

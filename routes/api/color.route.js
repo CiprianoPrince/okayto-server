@@ -19,7 +19,7 @@ module.exports = (app) => {
     router.post(
         '/',
         verifyRoles(ROLES.ADMIN),
-        colorValidator.validateName,
+        // colorValidator.validateName,
         colorValidator.validateCode,
         colorController.createOne
     );

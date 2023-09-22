@@ -1,13 +1,14 @@
 const { body } = require('express-validator');
 
+const UUID_REGEX =
+    /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
+
 exports.validateproductId = [
     body('productId')
         .trim()
         .notEmpty()
         .withMessage('productId is required')
-        .matches(
-            /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/
-        )
+        .matches(UUID_REGEX)
         .withMessage('productId must be a valid UUID V4'),
 ];
 
@@ -16,9 +17,7 @@ exports.validateSizeId = [
         .trim()
         .notEmpty()
         .withMessage('sizeId is required')
-        .matches(
-            /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/
-        )
+        .matches(UUID_REGEX)
         .withMessage('sizeId must be a valid UUID V4'),
 ];
 
@@ -27,29 +26,9 @@ exports.validateColorId = [
         .trim()
         .notEmpty()
         .withMessage('colorId is required')
-        .matches(
-            /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/
-        )
+        .matches(UUID_REGEX)
         .withMessage('colorId must be a valid UUID V4'),
 ];
-
-// exports.validateSize = [
-//     body('size')
-//         .trim()
-//         .notEmpty()
-//         .withMessage('Size name is required')
-//         .isIn(['S', 'M', 'L'])
-//         .withMessage('Size must be one of [S, M, L]'),
-// ];
-
-// exports.validateColor = [
-//     body('color')
-//         .trim()
-//         .notEmpty()
-//         .withMessage('Color is required')
-//         .isString()
-//         .withMessage('Color must be a string'),
-// ];
 
 exports.validateQuantityInStock = [
     body('quantityInStock')
@@ -71,7 +50,7 @@ exports.validateImagePath = [
 
 exports.validateReOrderThreshold = [
     body('reOrderThreshold')
-        .optional()
+        .optional({ checkFalsy: true })
         .trim()
         .notEmpty()
         .withMessage('reOrderThreshold is required')
@@ -81,7 +60,7 @@ exports.validateReOrderThreshold = [
 
 exports.validateLastRestockDate = [
     body('lastRestockDate')
-        .optional()
+         .optional({ checkFalsy: true })
         .trim()
         .notEmpty()
         .withMessage('lastRestockDate is required')

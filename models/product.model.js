@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             // define association here
             this.belongsTo(models.Category, { foreignKey: 'categoryId' });
+            this.hasOne(models.ProductImage, { foreignKey: 'productId' });
             this.hasMany(models.ProductColor, { foreignKey: 'productId' });
         }
     }
@@ -49,6 +50,18 @@ module.exports = (sequelize, DataTypes) => {
         {
             sequelize,
             modelName: 'Product',
+            hooks: {
+                afterCreate: async (product, options) => {
+                    const { sequelize } = product;
+
+                    const imageData = options.extraData?.image;
+
+                    await sequelize.models.ProductImage.create({
+                        productId: product.productId,
+                        ...imageData,
+                    });
+                },
+            },
         }
     );
     return Product;

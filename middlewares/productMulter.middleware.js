@@ -1,19 +1,29 @@
 const multer = require('multer');
 const { toImageUrl } = require('../utils');
+
+const productImagesPath = 'storage/uploads/imgs/products';
+
 const storage = multer.diskStorage({
-    destination: (request, file, cb) => {
-        cb(null, 'storage/uploads/images/products');
+    destination: (req, file, cb) => {
+        cb(null, productImagesPath);
     },
-    filename: (request, file, cb) => {
-        // Extract file extension
+    filename: (req, file, cb) => {
         const fileExtension = file.originalname.split('.').pop();
-
-        const urlEncodedName = toImageUrl(request.body.name);
-        // Construct the filename`
+        const urlEncodedName = toImageUrl(req.body.name);
         const filename = `${urlEncodedName}.${fileExtension}`;
-
         cb(null, filename);
     },
 });
 
-module.exports = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+    // If the name is not in the request body, reject the file.
+    if (!Object.values(req.body).every(Boolean)) {
+        return cb(null, false);
+    } // Rejects the file
+    cb(null, true); // Accepts the file
+};
+
+module.exports = multer({
+    storage: storage,
+    fileFilter: fileFilter,
+});

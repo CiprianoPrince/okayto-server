@@ -6,7 +6,9 @@ const { validationResult } = require('express-validator');
 const { StatusCodes } = require('http-status-codes');
 
 // Importing helper functions
-const { sendResponse, generateMessage, getModelName } = require('../helpers');
+const { sendResponse, generateMessage, getModelName, getColorName } = require('../helpers');
+
+const hexColorName = require('color-namer');
 
 // Fetching the model name based on the filename
 const modelName = getModelName(__filename);
@@ -99,7 +101,22 @@ exports.createOne = async (req, res) => {
 
     try {
         const rawColorData = req.body;
-        const createdColor = await Color.create(rawColorData);
+
+        const colorName = getColorName(rawColorData?.code);
+
+        const colorData = { ...rawColorData, name: colorName };
+
+        const foundColors = await Color.findAll({ where: { code: rawColorData.code } });
+
+        if (foundColors.length) {
+            return sendResponse(
+                res,
+                StatusCodes.BAD_REQUEST,
+                generateMessage.createOne.fail('Color already exist')
+            );
+        }
+
+        const createdColor = await Color.create(colorData);
 
         // Send created color data with OK status code
         sendResponse(
@@ -112,6 +129,7 @@ exports.createOne = async (req, res) => {
         if (error instanceof ValidationError) {
             // Handle validation error (currently not handling, but can be expanded)
         }
+
         // Send INTERNAL_SERVER_ERROR status code for other errors
         sendResponse(
             res,
@@ -142,10 +160,10 @@ exports.updateOne = async (req, res) => {
 
     try {
         const colorId = req.params.colorId;
-        const rawColorData = req.body;
+        const colorData = req.body;
 
         // Update the color data
-        const [updatedColorCount] = await Color.update(rawColorData, {
+        const [updatedColorCount] = await Color.cte(rawColorData, {
             where: { colorId },
         });
 

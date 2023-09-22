@@ -1,8 +1,6 @@
 // Load environment variables
 require('dotenv').config();
 
-const crypto = require('crypto').randomBytes(50).toString('hex');
-
 // External dependencies
 const path = require('path');
 const express = require('express');
@@ -18,6 +16,19 @@ const corsOptions = require('./config/corsOptions');
 const db = require('./models');
 
 const app = express();
+
+// Routes
+const {
+    authRoute,
+    refreshRoute,
+    logoutRoute,
+    userRoute,
+    categoryRoute,
+    productRoute,
+    variantRoute,
+    colorRoute,
+    sizeRoute,
+} = require('./routes');
 
 // Logging
 app.use(
@@ -60,20 +71,18 @@ app.use(
 );
 
 // Auth Routes
-require('./routes/auth.routes')(app);
-require('./routes/user.routes')(app);
-require('./routes/refresh.routes')(app);
-require('./routes/logout.routes')(app);
-
-// Public resource routes
-require('./routes/api/category.routes')(app);
-require('./routes/api/product.routes')(app);
-require('./routes/api/variant.routes')(app);
-require('./routes/api/color.routes')(app);
-require('./routes/api/size.routes')(app);
+authRoute(app);
+refreshRoute(app);
+logoutRoute(app);
+userRoute(app);
 
 // JWT Verification for API routes
 app.use(verifyJwt);
+categoryRoute(app);
+productRoute(app);
+variantRoute(app);
+colorRoute(app);
+sizeRoute(app);
 
 // Start server
 const PORT = process.env.PORT || 8000;

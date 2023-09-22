@@ -13,7 +13,13 @@ const { validationResult } = require('express-validator');
 const { StatusCodes } = require('http-status-codes');
 
 // Import helper functions
-const { sendResponse, generateMessage, getModelName, deleteImageSync } = require('../helpers');
+const {
+    sendResponse,
+    generateMessage,
+    getModelName,
+    formatValidationError,
+    deleteImageSync,
+} = require('../helpers');
 
 // Fetch the model name based on the filename
 const modelName = getModelName(__filename);
@@ -130,7 +136,7 @@ exports.createOne = async (req, res) => {
             StatusCodes.BAD_REQUEST,
             generateMessage.createOne.fail(),
             null,
-            errors.array()
+            errors.formatWith(formatValidationError).mapped()
         );
     }
 
@@ -150,30 +156,29 @@ exports.createOne = async (req, res) => {
         }
 
         // Extract variant data from req body
-        const { sizeId, colorId, quantityInStock } = req.body;
+        const rawVariantData = req.body;
         const imagePath = req.file.filename;
 
         const variantData = {
+            ...rawVariantData,
             productId,
         };
 
         const extraData = {
-            sizeId,
-            colorId,
+            image: {
+                imagePath: imagePath,
+                altText: imagePath,
+            },
             inventory: {
                 quantityInStock,
                 reOrderThreshold: req.body.reOrderThreshold ?? 50,
                 lastRestockDate: req.body.lastRestockDate ?? new Date().toISOString(),
             },
-            image: {
-                imagePath: imagePath,
-                altText: imagePath,
-            },
         };
 
         // Create a new variant for the product
         const createdVariant = await Variant.create(variantData, {
-            extraData: extraData,
+            extraData,
         });
 
         // Send the created variant data with CREATED status code

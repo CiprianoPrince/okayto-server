@@ -17,6 +17,8 @@
   "dependencies": {
     "@faker-js/faker": "^8.0.2",
     "bcrypt": "^5.1.0",
+    "color-name-list": "^10.13.0",
+    "color-namer": "^1.4.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",

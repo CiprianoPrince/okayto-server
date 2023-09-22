@@ -2,19 +2,19 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('Images', {
-            imageId: {
+        await queryInterface.createTable('ProductImages', {
+            ProductImageId: {
                 primaryKey: true,
                 allowNull: false,
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4,
             },
-            productColorId: {
+            productId: {
                 allowNull: false,
                 type: Sequelize.UUID,
                 references: {
-                    model: 'productcolors',
-                    key: 'productColorId',
+                    model: 'products',
+                    key: 'productId',
                 },
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE',
@@ -38,6 +38,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('Images');
+        await queryInterface.dropTable('ProductImages');
     },
 };

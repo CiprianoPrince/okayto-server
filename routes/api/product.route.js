@@ -20,7 +20,7 @@ module.exports = (app) => {
     router.post(
         '/',
         verifyRoles(ROLES.ADMIN),
-        uploadProductImage.single('productImage'),
+        uploadProductImage.single('image'),
         productValidator.validateCategoryId,
         productValidator.validateName,
         productValidator.validateDescription,
@@ -32,7 +32,7 @@ module.exports = (app) => {
     router.put(
         '/:productId',
         verifyRoles(ROLES.ADMIN),
-        uploadProductImage.single('productImage'),
+        uploadProductImage.single('image'),
         productValidator.validateCategoryId,
         productValidator.validateName,
         productValidator.validateDescription,
