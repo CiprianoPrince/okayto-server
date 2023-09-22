@@ -6,19 +6,19 @@ module.exports = (app) => {
     const { sizeController } = require('../../controllers');
 
     // Retrieve all sizes.
-    router.get('/', verifyRoles(ROLES.Admin, ROLES.User, ROLES.Guest), sizeController.findAll);
+    router.get('/', verifyRoles(ROLES.ADMIN, ROLES.USER, ROLES.GUEST), sizeController.findAll);
 
     //  Retrieve a specific size.
     router.get(
         '/:sizeId',
-        verifyRoles(ROLES.Admin, ROLES.User, ROLES.Guest),
+        verifyRoles(ROLES.ADMIN, ROLES.USER, ROLES.GUEST),
         sizeController.findByPk
     );
 
     // Place a new size.
     router.post(
         '/',
-        verifyRoles(ROLES.Admin),
+        verifyRoles(ROLES.ADMIN),
         sizeValidator.validateName,
         sizeController.createOne
     );
@@ -26,13 +26,13 @@ module.exports = (app) => {
     // Update size details/status.
     router.put(
         '/:sizeId',
-        verifyRoles(ROLES.Admin),
+        verifyRoles(ROLES.ADMIN),
         sizeValidator.validateName,
         sizeController.updateOne
     );
 
     // Cancel an size.
-    router.delete('/:sizeId', verifyRoles(ROLES.Admin), sizeController.deleteOne);
+    router.delete('/:sizeId', verifyRoles(ROLES.ADMIN), sizeController.deleteOne);
 
     // POST /sizes/{sizeId}/payments - Make a payment for an size.
     app.use('/api/sizes', router);

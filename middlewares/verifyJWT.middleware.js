@@ -1,18 +1,28 @@
-const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
+const { sendResponse, generateMessage } = require('../helpers');
+const { StatusCodes } = require('http-status-codes');
 
 module.exports = (req, res, next) => {
     const authHeader = req.headers?.authorization || req.headers?.Authorization;
     // Check if authHeader exists and starts with 'Bearer '
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return res.sendStatus(401); // Unauthorized
+        return sendResponse(
+            res,
+            StatusCodes.UNAUTHORIZED,
+            generateMessage.verifyToken.unauthorized()
+        );
     }
 
     // Extract token from authHeader
     const token = authHeader.split(' ')[1];
     jwt.verify(token, process.env.ACCESS_TOKEN, (err, decoded) => {
         if (err) {
-            return res.sendStatus(403); // Forbidden due to invalid token
+            return sendResponse(
+                res,
+                StatusCodes.FORBIDDEN,
+                generateMessage.verifyToken.forbidden()
+            );
         }
 
         // Assign user information to the req object

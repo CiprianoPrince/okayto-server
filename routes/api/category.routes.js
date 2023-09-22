@@ -6,19 +6,19 @@ module.exports = (app) => {
     const { categoryController } = require('../../controllers');
 
     // Retrieve all category.
-    router.get('/', verifyRoles(ROLES.Admin, ROLES.User, ROLES.Guest), categoryController.findAll);
+    router.get('/', verifyRoles(ROLES.ADMIN, ROLES.USER, ROLES.GUEST), categoryController.findAll);
 
     //  Retrieve details of a specific category.
     router.get(
         '/:categoryId',
-        verifyRoles(ROLES.Admin, ROLES.User, ROLES.Guest),
+        verifyRoles(ROLES.ADMIN, ROLES.USER, ROLES.GUEST),
         categoryController.findByPk
     );
 
     // Add a new category.
     router.post(
         '/',
-        verifyRoles(ROLES.Admin),
+        verifyRoles(ROLES.ADMIN),
         categoryValidator.validateName,
         categoryValidator.validateDescription,
         categoryController.createOne
@@ -27,14 +27,14 @@ module.exports = (app) => {
     //  Update a category's details.
     router.put(
         '/:categoryId',
-        verifyRoles(ROLES.Admin),
+        verifyRoles(ROLES.ADMIN),
         categoryValidator.validateName,
         categoryValidator.validateDescription,
         categoryController.updateOne
     );
 
     //  Delete a category.
-    router.delete('/:categoryId', verifyRoles(ROLES.Admin), categoryController.deleteOne);
+    router.delete('/:categoryId', verifyRoles(ROLES.ADMIN), categoryController.deleteOne);
 
     app.use('/api/categories', router);
 };

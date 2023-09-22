@@ -1,12 +1,26 @@
 const { ROLES } = require('../constants');
+const { sendResponse, generateMessage } = require('../helpers');
+const { StatusCodes } = require('http-status-codes');
 
 module.exports = (...allowedRoles) => {
     return (req, res, next) => {
-        if (allowedRoles.includes(ROLES.Guest)) return next();
+        if (allowedRoles.includes(ROLES.GUEST)) return next();
         const currentRole = req?.role;
-        if (!currentRole) return res.sendStatus(401);
+        if (!currentRole) {
+            return sendResponse(
+                res,
+                StatusCodes.UNAUTHORIZED,
+                generateMessage.verifyRole.missingRole()
+            );
+        }
 
-        if (!allowedRoles.includes(currentRole)) return res.sendStatus(401);
+        if (!allowedRoles.includes(currentRole)) {
+            return sendResponse(
+                res,
+                StatusCodes.UNAUTHORIZED,
+                generateMessage.verifyRole.roleNotAllowed()
+            );
+        }
         next();
     };
 };

@@ -54,3 +54,17 @@ exports.validatePhone = [
         .matches('/^(+)?(63)?(-| )?(()?0?(-| )?(()?(d{3})())?(-| )?(d{3})(-| )?(d{4})$/')
         .withMessage('Invalid phone number format'),
 ];
+
+exports.validatePassword = [
+    body('password')
+        .trim()
+        .isLength({ min: 8 })
+        .withMessage('Password should be at least 8 characters long.')
+        .matches(/[A-Z]/)
+        .withMessage('Password should contain at least one uppercase letter.')
+        .matches(/[a-z]/)
+        .withMessage('Password should contain at least one lowercase letter.')
+        .matches(/[0-9]/)
+        .withMessage('Password should contain at least one number.')
+        .escape(),
+];

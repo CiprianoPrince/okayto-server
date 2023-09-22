@@ -61,19 +61,19 @@ app.use(
 
 // Auth Routes
 require('./routes/auth.routes')(app);
-require('./routes/register.routes')(app);
+require('./routes/user.routes')(app);
 require('./routes/refresh.routes')(app);
 require('./routes/logout.routes')(app);
 
 // Public resource routes
-require('./routes/api/variant.routes')(app);
 require('./routes/api/category.routes')(app);
+require('./routes/api/product.routes')(app);
+require('./routes/api/variant.routes')(app);
 require('./routes/api/color.routes')(app);
 require('./routes/api/size.routes')(app);
 
 // JWT Verification for API routes
 app.use(verifyJwt);
-require('./routes/api/product.routes')(app);
 
 // Start server
 const PORT = process.env.PORT || 8000;

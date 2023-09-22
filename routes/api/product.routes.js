@@ -7,19 +7,19 @@ module.exports = (app) => {
     const { productController } = require('../../controllers');
 
     // Retrieve all products.
-    router.get('/', verifyRoles(ROLES.Admin, ROLES.User, ROLES.Guest), productController.findAll);
+    router.get('/', verifyRoles(ROLES.ADMIN, ROLES.USER, ROLES.GUEST), productController.findAll);
 
     //  Retrieve details of a specific product.
     router.get(
         '/:productId',
-        verifyRoles(ROLES.Admin, ROLES.User, ROLES.Guest),
+        verifyRoles(ROLES.ADMIN, ROLES.USER, ROLES.GUEST),
         productController.findByPk
     );
 
     // Add a new product.
     router.post(
         '/',
-        verifyRoles(ROLES.Admin),
+        verifyRoles(ROLES.ADMIN),
         uploadProductImage.single('productImage'),
         productValidator.validateCategoryId,
         productValidator.validateName,
@@ -31,7 +31,7 @@ module.exports = (app) => {
     //  Update a product's details.
     router.put(
         '/:productId',
-        verifyRoles(ROLES.Admin),
+        verifyRoles(ROLES.ADMIN),
         uploadProductImage.single('productImage'),
         productValidator.validateCategoryId,
         productValidator.validateName,
@@ -41,7 +41,7 @@ module.exports = (app) => {
     );
 
     //  Delete a product.
-    router.delete('/:productId', verifyRoles(ROLES.Admin), productController.deleteOne);
+    router.delete('/:productId', verifyRoles(ROLES.ADMIN), productController.deleteOne);
 
     app.use('/api/products', router);
 };

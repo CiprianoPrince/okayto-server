@@ -9,21 +9,21 @@ module.exports = (app) => {
     // Retrieve all product variants.
     router.get(
         '/:productId/variants',
-        verifyRoles(ROLES.Admin, ROLES.User, ROLES.Guest),
+        verifyRoles(ROLES.ADMIN, ROLES.USER, ROLES.GUEST),
         variantController.findAll
     );
 
     //  Retrieve details of a specific product variant.
     router.get(
         '/:productId/variants/:variantId',
-        verifyRoles(ROLES.Admin, ROLES.User),
+        verifyRoles(ROLES.ADMIN, ROLES.USER),
         variantController.findByPk
     );
 
     // Add a new product variant.
     router.post(
         '/:productId/variants',
-        verifyRoles(ROLES.Admin),
+        verifyRoles(ROLES.ADMIN),
         uploadVariantImage.single('variantImage'),
         variantValidator.validateColorId,
         variantValidator.validateSizeId,
@@ -36,7 +36,7 @@ module.exports = (app) => {
     //  Update a product variant's  details.
     router.put(
         '/:productId/variants/:variantId',
-        verifyRoles(ROLES.Admin),
+        verifyRoles(ROLES.ADMIN),
         uploadVariantImage.single('variantImage'),
         variantValidator.validateSizeId,
         variantValidator.validateColorId,
@@ -49,7 +49,7 @@ module.exports = (app) => {
     //  Delete a product.
     router.delete(
         '/:productId/variants/:variantId',
-        verifyRoles(ROLES.Admin),
+        verifyRoles(ROLES.ADMIN),
         variantController.deleteOne
     );
 

@@ -1,5 +1,5 @@
 module.exports = {
-    Admin: 6969,
-    User: 9696,
-    Guest: 1111,
+    ADMIN: '328618562aa92ff25960049a271f954b',
+    USER: '740c94ee13b41a1e2492a47c6416d823',
+    GUEST: '7a95ae52ec82461299118fdce08bf203',
 };

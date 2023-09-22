@@ -1,8 +1,8 @@
 module.exports = {
     authController: require('./auth.controller'),
-    logoutController: require('./logout.controller'),
     refreshTokenController: require('./refreshToken.controller'),
-    registerController: require('./register.controller'),
+    logoutController: require('./logout.controller'),
+    userController: require('./user.controller'),
     categoryController: require('./category.controller'),
     productController: require('./product.controller'),
     variantController: require('./variant.controller'),
