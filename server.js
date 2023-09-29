@@ -43,12 +43,13 @@ app.use(credentials);
 // Cross Origin Resource Sharing
 app.use(cors(corsOptions));
 
-app.use(
-    rateLimit({
-        windowMs: 15 * 60 * 1000, // 15 minutes
-        max: 100,
-    })
-);
+// app.use(
+//     rateLimit({
+//         windowMs: 15 * 60 * 1000, // 15 minutes
+//         max: 100,
+//     })
+// );
+
 app.use(helmet());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -62,27 +63,28 @@ db.sequelize
 
 // Serve static images
 app.use(
-    '/storage/uploads/images',
+    '/storage/uploads/imgs',
     (req, res, next) => {
         res.header('Cross-Origin-Resource-Policy', 'cross-origin');
         next();
     },
-    express.static(path.join(__dirname, 'storage/uploads/images'))
+    express.static(path.join(__dirname, 'storage/uploads/imgs'))
 );
 
 // Auth Routes
-authRoute(app);
+http: authRoute(app);
 refreshRoute(app);
 logoutRoute(app);
 userRoute(app);
 
-// JWT Verification for API routes
-app.use(verifyJwt);
-categoryRoute(app);
 productRoute(app);
+categoryRoute(app);
 variantRoute(app);
 colorRoute(app);
 sizeRoute(app);
+
+// JWT Verification for API routes
+app.use(verifyJwt);
 
 // Start server
 const PORT = process.env.PORT || 8000;

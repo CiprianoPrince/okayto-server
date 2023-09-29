@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
             // define association here
             this.belongsTo(models.Product, { foreignKey: 'productId' });
             this.belongsTo(models.Color, { foreignKey: 'colorId' });
+            this.hasMany(models.Variant, { foreignKey: 'productColorId' });
             this.hasOne(models.VariantImage, { foreignKey: 'productColorId' });
         }
     }
@@ -51,13 +52,13 @@ module.exports = (sequelize, DataTypes) => {
                     const { sequelize } = productColor;
 
                     // Accessing extra data from options
-                    const imageData = options.extraData.image;
+                    const variantImageData = options.extraData.variantImageData;
 
                     // Create associated Image
                     await sequelize.models.VariantImage.create({
                         productColorId: productColor.productColorId,
-                        imagePath: imageData.imagePath,
-                        altText: imageData.altText,
+                        imagePath: variantImageData.imagePath,
+                        altText: variantImageData.altText,
                     });
                 },
             },

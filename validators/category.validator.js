@@ -17,7 +17,7 @@ exports.validateDescription = [
         .trim()
         .notEmpty()
         .withMessage('Description is required')
-        .matches(/^[a-zA-Z0-9\s.,?!;:%'"()\-]+$/)
+        .matches(/^[\p{L}\p{N}\s.,?!;:%'"()\-&]+$/u)
         .withMessage('Description must contain only letters')
         .isLength({ min: 3 })
         .withMessage('Description must be at least 3 characters long')

@@ -25,6 +25,7 @@ module.exports = (app) => {
         '/:productId/variants',
         verifyRoles(ROLES.ADMIN),
         uploadVariantImage.single('image'),
+        variantValidator.validateImage,
         variantValidator.validateColorId,
         variantValidator.validateSizeId,
         variantValidator.validateQuantityInStock,
@@ -37,7 +38,8 @@ module.exports = (app) => {
     router.put(
         '/:productId/variants/:variantId',
         verifyRoles(ROLES.ADMIN),
-        uploadVariantImage.single('variantImage'),
+        uploadVariantImage.single('image'),
+        variantValidator.validateImage,
         variantValidator.validateSizeId,
         variantValidator.validateColorId,
         variantValidator.validateQuantityInStock,

@@ -14,7 +14,9 @@ const modelName = getModelName(__filename);
 // Fetch all categories
 exports.findAll = async (req, res) => {
     try {
-        const foundCategories = await Category.findAll({ attributes: ['categoryId', 'name'] });
+        const foundCategories = await Category.findAll({
+            attributes: ['categoryId', 'name', 'slug'],
+        });
 
         // If there are no categories, send NO_CONTENT status code
         if (!foundCategories.length) {
@@ -52,7 +54,9 @@ exports.findAll = async (req, res) => {
 exports.findByPk = async (req, res) => {
     try {
         const categoryId = req.params.categoryId;
-        const foundCategory = await Category.findByPk(categoryId);
+        const foundCategory = await Category.findByPk(categoryId, {
+            attributes: ['categoryId', 'name', 'slug'],
+        });
 
         // If category not found, send BAD_REQUEST status code
         if (!foundCategory) {

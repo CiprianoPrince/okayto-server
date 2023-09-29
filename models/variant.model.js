@@ -47,11 +47,16 @@ module.exports = (sequelize, DataTypes) => {
             sequelize,
             modelName: 'Variant',
             hooks: {
-                beforeCreate: async (variant, options) => {
+                beforeValidate: async (variant, options) => {
                     const { sequelize } = variant;
+
+                    const productColorId = variant.productColorId;
+
+                    if (productColorId) return;
+
                     // Accessing extra data from options
-                    const productColorData = options.extraData.productColor;
-                    const imageData = options.extraData.image;
+                    const productColorData = options.extraData.productColorData;
+                    const variantImageData = options.extraData.variantImageData;
 
                     // Create associated ProductColor
                     const createdProductColor = await sequelize.models.ProductColor.create(
@@ -61,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
                         },
                         {
                             extraData: {
-                                image: { ...imageData },
+                                variantImageData: { ...variantImageData },
                             },
                         }
                     );
@@ -73,7 +78,7 @@ module.exports = (sequelize, DataTypes) => {
                     const { sequelize } = variant;
 
                     // Accessing extra data from options
-                    const inventoryData = options.extraData.color;
+                    const inventoryData = options.extraData.inventoryData;
 
                     // Create associated Image
                     await sequelize.models.Inventory.create({

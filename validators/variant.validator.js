@@ -39,13 +39,20 @@ exports.validateQuantityInStock = [
         .withMessage('Quantity in stock must only contain digits'),
 ];
 
-exports.validateImagePath = [
+exports.validateImage = [
     body('imagePath')
+        .optional()
         .trim()
         .notEmpty()
         .withMessage('Image path is required')
-        .matches(/\.(jpeg|jpg|png|gif|bmp|webp)$/i)
+        .matches(/\.(jpeg|jpg|png|webp)$/i)
         .withMessage('Image path must be a valid image format (e.g., .jpg, .jpeg, .png, etc.)'),
+
+    body('altText')
+        .optional()
+        .trim()
+        .notEmpty()
+        .withMessage('Image alt text is required and should not be empty'),
 ];
 
 exports.validateReOrderThreshold = [
@@ -60,7 +67,7 @@ exports.validateReOrderThreshold = [
 
 exports.validateLastRestockDate = [
     body('lastRestockDate')
-         .optional({ checkFalsy: true })
+        .optional({ checkFalsy: true })
         .trim()
         .notEmpty()
         .withMessage('lastRestockDate is required')

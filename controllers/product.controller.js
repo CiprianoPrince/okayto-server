@@ -1,10 +1,10 @@
 // Import necessary modules
 const db = require('../models');
-const { col } = require('sequelize');
+const { fn, col } = require('sequelize');
 const Product = db.Product;
+const Category = db.Category;
 const ProductImage = db.ProductImage;
-const Size = db.Size;
-const Color = db.Color;
+const ProductColor = db.ProductColor;
 
 const { ValidationError } = require('sequelize');
 const { validationResult } = require('express-validator');
@@ -26,33 +26,32 @@ const modelName = getModelName(__filename);
 // Fetch all products
 exports.findAll = async (req, res) => {
     try {
-        // Fetch all products from the database
         const foundProducts = await Product.findAll({
             attributes: [
                 'productId',
                 'name',
+                'slug',
                 'description',
                 'price',
-                'categoryId',
-                [col('ProductImage.imagePath'), 'imagePath'], // Custom alias
-                [col('ProductImage.altText'), 'altText'], // Custom alias
-                [col('Colors.name'), 'color'],
-                [col('Sizes.name'), 'size'],
+                [fn('COUNT', col('ProductColors.productColorId')), 'colors'],
             ],
             include: [
                 {
+                    model: Category,
+                    as: 'category',
+                    attributes: ['categoryId', 'name', 'slug'],
+                },
+                {
                     model: ProductImage,
-                    attributes: [], // Exclude default attributes
+                    as: 'image',
+                    attributes: [['ProductImageId', 'imageId'], 'imagePath', 'altText'],
                 },
                 {
-                    model: Color,
-                    attributes: [],
-                },
-                {
-                    model: Size,
-                    attributes: [],
+                    model: ProductColor,
+                    attributes: [], // Exclude any attributes here, since you only want to count the rows.
                 },
             ],
+            group: ['Product.productId', 'category.categoryId', 'image.ProductImageId'], // Group by product and included models' primary keys.
         });
 
         // If there are no products, send NO_CONTENT status code
@@ -173,15 +172,14 @@ exports.createOne = async (req, res) => {
         }
 
         // Extract variant data from req body
-        const rawProductData = req.body;
+        const { imagePath, altText, ...rawProductData } = req.body;
         const productSlug = toSlug(`${rawProductData.name}-tshirt`);
         const productData = { ...rawProductData, slug: productSlug };
 
-        const imagePath = req.file?.filename;
         const extraData = {
             image: {
                 imagePath: imagePath,
-                altText: productData.name,
+                altText: altText,
             },
         };
 
@@ -199,6 +197,8 @@ exports.createOne = async (req, res) => {
         if (error instanceof ValidationError) {
             // Handle validation error
         }
+
+        console.log(error);
 
         // Send INTERNAL_SERVER_ERROR status code for other errors
         sendResponse(

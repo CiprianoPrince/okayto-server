@@ -1,12 +1,14 @@
 // Import necessary modules
 const db = require('../models');
 const Product = db.Product;
-const ProductVariant = db.ProductVariant;
+const Color = db.Color;
+const ProductColor = db.ProductColor;
 const Variant = db.Variant;
 const Size = db.Size;
-const Color = db.Color;
 const VariantImage = db.VariantImage;
 const Inventory = db.Inventory;
+
+const { col } = require('sequelize');
 
 const { ValidationError } = require('sequelize');
 const { validationResult } = require('express-validator');
@@ -19,6 +21,8 @@ const {
     getModelName,
     formatValidationError,
     deleteImageSync,
+    formatProductVariant,
+    formatProductVariants,
 } = require('../helpers');
 
 // Fetch the model name based on the filename
@@ -27,38 +31,49 @@ const modelName = getModelName(__filename);
 // Fetch all variant
 exports.findAll = async (req, res) => {
     try {
-        // const variants = await ProductVariant.findAll();
         const productId = req.params.productId;
 
-        const foundVariants = await ProductVariant.findAll({
+        const foundProductVariants = await Product.findOne({
             where: { productId },
-            attributes: ['productId', 'variantId'],
+            attributes: [],
             include: [
                 {
-                    model: Size,
-                    attributes: ['sizeId', 'name'],
-                },
-                {
-                    model: Color,
-                    attributes: ['colorId', 'name'],
-                },
-                {
-                    model: Variant,
+                    model: ProductColor,
+                    attributes: ['productColorId'],
                     include: [
                         {
-                            model: VariantImage,
-                            attributes: ['imagePath', 'altText'],
+                            model: Color,
+                            attributes: ['colorId', 'name', 'code'],
                         },
                         {
-                            model: Inventory,
-                            attributes: ['quantityInStock'],
+                            model: VariantImage,
+                            attributes: ['variantImageId', 'imagePath', 'altText'],
+                        },
+                        {
+                            model: Variant,
+                            attributes: ['variantId'],
+                            include: [
+                                {
+                                    model: Inventory,
+                                    attributes: [
+                                        'inventoryId',
+                                        'quantityInStock',
+                                        'reOrderThreshold',
+                                        'lastRestockDate',
+                                    ],
+                                },
+                                {
+                                    model: Size,
+                                    attributes: ['sizeId', 'name'],
+                                },
+                            ],
                         },
                     ],
                 },
             ],
         });
 
-        if (!foundVariants.length) {
+        if (!foundProductVariants.ProductColors.length) {
             return sendResponse(
                 res,
                 StatusCodes.NO_CONTENT,
@@ -66,17 +81,21 @@ exports.findAll = async (req, res) => {
             );
         }
 
+        const formattedFoundProductVariants = formatProductVariants(foundProductVariants);
+
         sendResponse(
             res,
             StatusCodes.OK,
-            generateMessage.findAll.success(modelName, foundVariants.length),
-            foundVariants
+            generateMessage.findAll.success(modelName, formattedFoundProductVariants.length),
+            formattedFoundProductVariants
         );
     } catch (error) {
         if (error instanceof ValidationError) {
             // Handle validation error
         }
+
         console.log(error);
+
         sendResponse(
             res,
             StatusCodes.INTERNAL_SERVER_ERROR,
@@ -92,9 +111,46 @@ exports.findAll = async (req, res) => {
 exports.findByPk = async (req, res) => {
     try {
         const variantId = req.params.variantId;
-        const dbVariantData = await Variant.findByPk(variantId);
+        // const dbVariantData = await Variant.findByPk(variantId);
 
-        if (!dbVariantData) {
+        const foundProductVariant = await Variant.findByPk(variantId, {
+            attributes: ['variantId'],
+            include: [
+                {
+                    model: ProductColor,
+                    attributes: ['productColorId'],
+                    include: [
+                        {
+                            model: Color,
+                            attributes: ['colorId', 'name', 'code'],
+                        },
+                        {
+                            model: VariantImage,
+                            attributes: ['variantImageId', 'imagePath', 'altText'],
+                        },
+                    ],
+                },
+                {
+                    model: Size,
+                    attributes: ['sizeId', 'name'],
+                },
+                {
+                    model: Inventory,
+                    attributes: [
+                        'inventoryId',
+                        'quantityInStock',
+                        'reOrderThreshold',
+                        'lastRestockDate',
+                    ],
+                },
+            ],
+        });
+
+        const formattedFoundProductVariant = formatProductVariant(foundProductVariant);
+
+        res.send({ formattedFoundProductVariant });
+
+        if (!foundVariant) {
             return sendResponse(
                 res,
                 StatusCodes.BAD_REQUEST,
@@ -106,12 +162,14 @@ exports.findByPk = async (req, res) => {
             res,
             StatusCodes.OK,
             generateMessage.findByPk.success(modelName),
-            dbVariantData
+            foundVariant
         );
     } catch (error) {
         if (error instanceof ValidationError) {
             // Handle validation error
         }
+
+        console.log(error);
 
         sendResponse(
             res,
@@ -155,30 +213,55 @@ exports.createOne = async (req, res) => {
             );
         }
 
+        const productColorId = req.body.productColorId;
+
         // Extract variant data from req body
         const rawVariantData = req.body;
-        const imagePath = req.file.filename;
 
         const variantData = {
-            ...rawVariantData,
-            productId,
+            sizeId: rawVariantData.sizeId,
         };
 
         const extraData = {
-            image: {
-                imagePath: imagePath,
-                altText: imagePath,
-            },
-            inventory: {
-                quantityInStock,
-                reOrderThreshold: req.body.reOrderThreshold ?? 50,
-                lastRestockDate: req.body.lastRestockDate ?? new Date().toISOString(),
+            inventoryData: {
+                quantityInStock: rawVariantData.quantityInStock,
+                reOrderThreshold: rawVariantData.reOrderThreshold ?? 50,
+                lastRestockDate: rawVariantData.lastRestockDate
+                    ? rawVariantData.lastRestockDate
+                    : new Date().toISOString(),
             },
         };
 
+        if (!productColorId) {
+            extraData.productColorData = {
+                productId: productId,
+                colorId: rawVariantData.colorId,
+            };
+
+            extraData.variantImageData = {
+                imagePath: rawVariantData.imagePath,
+                altText: rawVariantData.altText,
+            };
+        } else {
+            const foundVariantCount = await Variant.count({
+                where: { productColorId, sizeId: rawVariantData.sizeId },
+            });
+
+            if (foundVariantCount) {
+                return sendResponse(
+                    res,
+                    StatusCodes.BAD_REQUEST,
+                    generateMessage.createOne.fail("Product's variant already exist")
+                );
+            }
+
+            variantData.productColorId = productColorId;
+        }
+
         // Create a new variant for the product
         const createdVariant = await Variant.create(variantData, {
-            extraData,
+            extraData: extraData,
+            hooks: true,
         });
 
         // Send the created variant data with CREATED status code
@@ -199,6 +282,8 @@ exports.createOne = async (req, res) => {
                 error.errors
             );
         }
+
+        console.log(error);
 
         // Send INTERNAL_SERVER_ERROR status code for other errors
         sendResponse(

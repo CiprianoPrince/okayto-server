@@ -16,7 +16,7 @@ exports.validateName = [
         .trim()
         .notEmpty()
         .withMessage('Product name is required')
-        .matches(/^[\p{L}\p{N}\s.,?!;:%'"()\-]+$/u)
+        .matches(/^[\p{L}\p{N}\s.,?!;:%'"()\-&]+$/u)
         .withMessage('Product name must contain only letters and spaces')
         .isLength({ min: 3 })
         .withMessage('Product name must be at least 3 characters long')
@@ -28,7 +28,7 @@ exports.validateDescription = [
         .trim()
         .notEmpty()
         .withMessage('Description is required')
-        .matches(/^[\p{L}\p{N}\s.,?!;:%'"()\-]+$/u)
+        .matches(/^[\p{L}\p{N}\s.,?!;:%'"()\-&]+$/u)
         .withMessage('Description must contain only letters')
         .isLength({ min: 3 })
         .withMessage('Description must be at least 3 characters long')
@@ -65,4 +65,18 @@ exports.validateColorId = [
             /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/
         )
         .withMessage('colorId must be a valid UUID V4'),
+];
+
+exports.validateImage = [
+    body('imagePath')
+        .trim()
+        .notEmpty()
+        .withMessage('Image path is required')
+        .matches(/\.(jpeg|jpg|png|webp)$/i)
+        .withMessage('Image path must be a valid image format (e.g., .jpg, .jpeg, .png, etc.)'),
+
+    body('altText')
+        .trim()
+        .notEmpty()
+        .withMessage('Image alt text is required and should not be empty'),
 ];

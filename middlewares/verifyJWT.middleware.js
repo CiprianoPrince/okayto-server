@@ -25,9 +25,7 @@ module.exports = (req, res, next) => {
             );
         }
 
-        console.log(decoded);
-
-        // Assign user information to the req object
+        // Assign user information to the req    object
         req.userId = decoded.userId;
         req.role = decoded.role;
         next(); // Proceed to the next middleware or route handler

@@ -38,6 +38,8 @@ exports.findAll = async (req, res) => {
         if (error instanceof ValidationError) {
             // Handle validation error (currently not handling, but can be expanded)
         }
+
+        console.log(error);
         // Send INTERNAL_SERVER_ERROR status code for other errors
         sendResponse(
             res,
@@ -106,9 +108,9 @@ exports.createOne = async (req, res) => {
 
         const colorData = { ...rawColorData, name: colorName };
 
-        const foundColors = await Color.findAll({ where: { code: rawColorData.code } });
+        const foundColorsCount = await Color.count({ where: { code: rawColorData.code } });
 
-        if (foundColors.length) {
+        if (foundColorsCount) {
             return sendResponse(
                 res,
                 StatusCodes.BAD_REQUEST,

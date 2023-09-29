@@ -8,18 +8,27 @@ const storage = multer.diskStorage({
         cb(null, productImagesPath);
     },
     filename: (req, file, cb) => {
-        const fileExtension = file.originalname.split('.').pop();
-        const urlEncodedName = toImageUrl(req.body.name);
-        const filename = `${urlEncodedName}.${fileExtension}`;
+        const filename = req.body.imagePath;
         cb(null, filename);
     },
 });
 
 const fileFilter = (req, file, cb) => {
-    // If the name is not in the request body, reject the file.
     if (!Object.values(req.body).every(Boolean)) {
         return cb(null, false);
     } // Rejects the file
+
+    const fileExtension = file.originalname.split('.').pop();
+
+    const productName = req.body.name;
+
+    const urlEncodedProductName = toImageUrl(productName);
+
+    const filename = `${urlEncodedProductName}.${fileExtension}`;
+
+    req.body.imagePath = filename;
+    req.body.altText = productName;
+
     cb(null, true); // Accepts the file
 };
 
