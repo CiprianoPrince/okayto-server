@@ -22,7 +22,7 @@ module.exports = {
         forbidden: () => 'Invalid token',
     },
     verifyRole: {
-        missingRole: () => 'Role is missing in the request body.',
+        missingRole: () => 'Role is missing in the request.',
         roleNotAllowed: () => 'Role is not allowed for this route.',
     },
     findAll: {

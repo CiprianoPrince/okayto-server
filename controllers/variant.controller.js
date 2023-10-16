@@ -39,7 +39,7 @@ exports.findAll = async (req, res) => {
             include: [
                 {
                     model: ProductColor,
-                    attributes: ['productColorId'],
+                    attributes: ['productId'],
                     include: [
                         {
                             model: Color,
@@ -121,6 +121,10 @@ exports.findByPk = async (req, res) => {
                     attributes: ['productColorId'],
                     include: [
                         {
+                            model: Product,
+                            attributes: ['productId', 'categoryId', 'name', 'price', 'slug'],
+                        },
+                        {
                             model: Color,
                             attributes: ['colorId', 'name', 'code'],
                         },
@@ -146,11 +150,7 @@ exports.findByPk = async (req, res) => {
             ],
         });
 
-        const formattedFoundProductVariant = formatProductVariant(foundProductVariant);
-
-        res.send({ formattedFoundProductVariant });
-
-        if (!foundVariant) {
+        if (!foundProductVariant) {
             return sendResponse(
                 res,
                 StatusCodes.BAD_REQUEST,
@@ -158,11 +158,13 @@ exports.findByPk = async (req, res) => {
             );
         }
 
+        const formattedFoundProductVariant = formatProductVariant(foundProductVariant);
+
         sendResponse(
             res,
             StatusCodes.OK,
             generateMessage.findByPk.success(modelName),
-            foundVariant
+            formattedFoundProductVariant
         );
     } catch (error) {
         if (error instanceof ValidationError) {

@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
             this.hasOne(models.Profile, { foreignKey: 'userId' });
             this.hasOne(models.RefreshToken, { foreignKey: 'userId' });
             this.hasOne(models.Address, { foreignKey: 'userId' });
+            this.hasMany(models.Cart, { foreignKey: 'userId' });
         }
     }
     User.init(

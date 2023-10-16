@@ -13,10 +13,17 @@ module.exports = (app) => {
         variantController.findAll
     );
 
+    // Retrieve all product variants.
+    router.get(
+        '/:productId/variants',
+        verifyRoles(ROLES.ADMIN, ROLES.USER, ROLES.GUEST),
+        variantController.findAll
+    );
+
     //  Retrieve details of a specific product variant.
     router.get(
         '/:productId/variants/:variantId',
-        verifyRoles(ROLES.ADMIN, ROLES.USER),
+        verifyRoles(ROLES.USER, ROLES.GUEST),
         variantController.findByPk
     );
 

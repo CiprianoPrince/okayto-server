@@ -3,6 +3,11 @@ const formatFoundProductVariants = (foundProductVariants) => {
         return productColor.Variants.map((variant) => {
             return {
                 variantId: variant.variantId,
+                productId: productColor.productId,
+                categoryId: productColor.Product.categoryId,
+                name: productColor.Product.name,
+                price: productColor.Product.price,
+                slug: productColor.Product.slug,
                 color: {
                     colorId: productColor.Color.colorId,
                     name: productColor.Color.name,

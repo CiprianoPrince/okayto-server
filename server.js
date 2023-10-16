@@ -23,6 +23,7 @@ const {
     refreshRoute,
     logoutRoute,
     userRoute,
+    cartRoute,
     categoryRoute,
     productRoute,
     variantRoute,
@@ -72,7 +73,7 @@ app.use(
 );
 
 // Auth Routes
-http: authRoute(app);
+authRoute(app);
 refreshRoute(app);
 logoutRoute(app);
 userRoute(app);
@@ -85,6 +86,7 @@ sizeRoute(app);
 
 // JWT Verification for API routes
 app.use(verifyJwt);
+cartRoute(app);
 
 // Start server
 const PORT = process.env.PORT || 8000;

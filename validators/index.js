@@ -1,5 +1,6 @@
 module.exports = {
     userValidator: require('./user.validator'),
+    cartValidator: require('./cart.validator'),
     categoryValidator: require('./category.validator'),
     productValidator: require('./product.validator'),
     variantValidator: require('./variant.validator'),

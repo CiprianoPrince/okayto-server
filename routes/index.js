@@ -3,6 +3,7 @@ module.exports = {
     refreshRoute: require('./refresh.route'),
     logoutRoute: require('./logout.route'),
     userRoute: require('./user.route'),
+    cartRoute: require('./cart.route'),
     categoryRoute: require('./api/category.route'),
     productRoute: require('./api/product.route'),
     variantRoute: require('./api/variant.route'),
